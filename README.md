@@ -1,1 +1,1 @@
-'#manuchosocial' 
+# manuchosocial
