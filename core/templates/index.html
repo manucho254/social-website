@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+
+<section class="p-4 offset-lg-3">
+ <div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-sm-12">
+        <div class="card h-100 bg-light">
+         <div class="card-title m-2">
+           <div class="d-flex d-flex justify-content-between">
+              <div>
+                <img class="img image-fluid mt-3" src="https://images.unsplash.com/photo-1637703283014-7c64ec1d7085?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=100" alt="user-image">
+                 <span class="bold">manucho</span>
+              </div>
+              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
+           </div>
+         </div>
+          <img src="https://images.unsplash.com/photo-1637703283014-7c64ec1d7085?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop" class="card-img-top main-post-image" alt="...">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <button class="btn border-none text-danger "><i class="fa h4 fa-heart"></i><span>1</span></button>
+                    <button class="btn border-none "><i class="fa h4 fa-comment"></i></button>
+                </div>
+                <div class="like-caption">
+                 <span class="bold">1,000 likes</span>
+                 <p class="lead">Happy be here</p>
+                </div>
+            </div>
+            <div class="mt-0">
+                <div class="comments">
+                  <p class="lead p-2">{% lorem 8|linebreaks %}</p>
+                </div>
+                 <a class="link text-decoration-none text-info px-2 " href="#"> load more ...</a>
+             <div class="comment-flex p-3">
+                 <img class="img image-fluid" src="https://images.unsplash.com/photo-1637703283014-7c64ec1d7085?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=100" alt="user-image">
+                 <br>
+                <form method="get">
+                  <input class="form-control comment-input w-80 rounded-pill" type="text" placeholder="Add comment">
+                </form>
+             </div>
+            </div>
+         </div>
+     </div>
+   </div>
+  </div>
+</section>
+
+
+
+{% endblock content %}

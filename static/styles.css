@@ -1,0 +1,70 @@
+.searchinput-box {
+    width: 450px;
+    height: 40px;
+    border: hidden;
+    background-color: rgb(205, 215, 219);
+}
+
+.form-control:focus {
+    background-color: rgb(205, 215, 219);
+    border: none;
+}
+
+.img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.main-post-image {
+    width: 617px;
+    height: 600px;
+    object-fit: cover;
+    border: none;
+}
+
+.comments {
+    max-height: 40px; 
+    overflow-y: hidden;
+    background-color: rgb(247, 250, 252);
+}
+
+.comment-input{
+    width: 500px;
+    background-color: rgb(205, 215, 219);
+}
+
+.comment-flex {
+    display: flex;
+    justify-content:flex-start;
+    font-size: 20px;
+}
+
+.comment-flex  input {
+    margin-left: 10px;
+}
+
+.like-caption {
+    display: flex;
+    justify-content:flex-start;
+    font-size: 20px;
+}
+
+.like-caption span {
+    margin-right: 10px;
+}
+
+@media (max-width: 768px){
+    .searchinput-box {
+        width: 260px;
+    }
+    .main-post-image {
+        width: 363px;
+        height: 363px;
+    }
+    .comment-input {
+        width: 300px;
+    }
+}
+
