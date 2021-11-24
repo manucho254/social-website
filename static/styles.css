@@ -55,16 +55,48 @@
     margin-right: 10px;
 }
 
+.card {
+    border: none;
+}
+
 @media (max-width: 768px){
+    .container {
+        margin: 0px;
+        padding: 0px;
+    }
+    .card {
+        margin-right: 0px;
+        padding-left: 0px;
+        width: 100%;
+    }
     .searchinput-box {
         width: 260px;
     }
     .main-post-image {
-        width: 363px;
+        width: 387px;
         height: 363px;
     }
     .comment-input {
         width: 300px;
     }
+}
+
+@media (max-width: 400px) {
+    .main-post-image {
+        width: 310px;
+        height: 363px;
+    }
+    .comment-input {
+        width: 230px;
+    }
+    .like-caption {
+        display: flex;
+        justify-content:flex-start;
+        font-size: 15px;
+    }
+    .navbar {
+        padding: 0;
+    }
+    
 }
 
