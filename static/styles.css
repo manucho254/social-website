@@ -26,7 +26,7 @@
 
 .comments {
     max-height: 40px; 
-    overflow-y: hidden;
+    overflow-y: scroll;
     background-color: rgb(247, 250, 252);
 }
 
@@ -55,8 +55,13 @@
     margin-right: 10px;
 }
 
-.card {
+.my-card {
     border: none;
+}
+
+.fa-heart {
+    background-color: black;
+    color: white;
 }
 
 @media (max-width: 768px){
@@ -64,7 +69,7 @@
         margin: 0px;
         padding: 0px;
     }
-    .card {
+    .my-card {
         margin-right: 0px;
         padding-left: 0px;
         width: 100%;
@@ -81,7 +86,36 @@
     }
 }
 
-@media (max-width: 400px) {
+.inactive {
+    border: none;
+    background-color: transparent;
+}
+
+.inactive i {
+    padding-left: 5px;
+    background-color: rgb(248, 246, 246);
+    color: black;
+}
+
+.fa .fa-heart {
+    background-color: white;
+    color: black;
+}
+
+.active {
+    padding-left: 5px;
+    border: hidden;
+    background-color: transparent;
+}
+
+.active i {
+    padding-left: 5px;
+    border: hidden;
+    background-color: rgb(248, 246, 246);
+    color: red;
+}
+
+@media (max-width: 412px) {
     .main-post-image {
         width: 310px;
         height: 363px;
@@ -96,6 +130,10 @@
     }
     .navbar {
         padding: 0;
+    }
+    .nav-small {
+        display: flex;
+        justify-content: space-between;
     }
     
 }

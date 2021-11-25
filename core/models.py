@@ -1,19 +1,71 @@
 from django.db import models
+from io import BytesIO
+from PIL import Image
+from django.core.files import File
 from django.contrib.auth.models import User
+from accounts.models import Profile
+
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager, self).get_queryset().filter(status="published")
 
 class Post(models.Model):
-    # author = models.ForeignKey(Profile, on_delete=models.CASCADE,  related_name="author")
-    title = models.CharField(max_length=200,  blank=True, null=True)
-    post_image = models.ImageField(upload_to="images")
+    objects = models.Manager()
+    published = PublishedManager()
+    
+    STATUS_CHOICES = {
+        ('draft', 'Draft'),
+        ('publishe', 'Published')
+    }
+    
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE,  related_name="author")
+    caption = models.CharField(max_length=200,  blank=True, null=True)
+    likes = models.ManyToManyField(User, blank=True, related_name="likes")
+    post_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
+    post_thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
     created_on = models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        ordering = ["-created_on"]
+    
     def __str__(self):
-        return "{} posted {}".format(self.author, self.title) 
+        return "{}  | {}".format(self.author, self.caption) 
+    
+    def get_post_image(self):
+        if self.post_image:
+            return 'http://127.0.0.1:8000' + self.post_image.url
+        return ''
+    
+    def get_post_mbnail(self):
+        if self.post_thumbnail:
+            return 'http://127.0.0.1:8000' + self.post_image.url
+        else:
+            if self.post_thumbnail:
+                self.post_image = self.make_thumbnail(self.image)
+                self.save()
+                return 'http://127.0.0.1:8000' + self.post_thumbnail.url
+            else:
+                return ''
+
+    def make_thumbnail(self, post_image, size=(300, 200)):
+        img = Image.open(post_image)
+        img.convert('RGB')
+        img.post_thumbnail(size)
+
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=post_image.caption,)
+
+        return thumbnail
+
 
 class Comment(models.Model):
-    # message_by = models.ForeignKey(Profile,  on_delete=models.CASCADE)
-    message = models.TextField(max_length=200)
+    message_by = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    message = models.CharField(max_length=300)
     commented_on = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
     
     def __str__(self):
         return self.message_by
