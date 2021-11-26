@@ -4,8 +4,8 @@ from .models import Comment,Post
 class CommentModelForm(forms.ModelForm):
     message = forms.CharField(label ="", widget = forms.TextInput (attrs ={
             'placeholder':'Add comment',
-            'class': 'form-control comment-input  w-80 rounded-pill',
-            'size': 75,
+            'class': "post-body w-100 rounded-pill",
+            'rows': "3",
             "id": "message"
             }))
     class Meta:

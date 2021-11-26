@@ -38,11 +38,29 @@ class HomeView(View):
 class PostDetailView(View):
     def get(self, request, pk,  *args,  **kwargs):
         post = Post.objects.get(pk=pk)
+        form = CommentModelForm()
         
         context = {
-            "post": post 
+            "post": post,
+            "form": form
         }
         
+        return render(request,  "post_detail.html",  context)
+    
+    def post(self,  request, pk,  *args,  **kwargs):
+        post = Post.objects.get(pk=pk)
+        form = CommentModelForm(request.POST)
+        
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.author = request.user
+            new_comment.post = post
+            new_comment.save()
+            
+        context = {
+            "posts": post,
+            "form": form
+        }
         return render(request,  "post_detail.html",  context)
     
 class CreatePost(CreateView):

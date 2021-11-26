@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -47,6 +47,11 @@
                 </div>
                  <a class="link text-decoration-none text-dark px-2" href="#">all comments 29..</a>
             </div>
+            <form method="post" class="d-flex">
+             {% csrf_token %}
+              {{ form|crispy }}
+              <input type="submit" class="btn btn-dark rounded-pill" placeholder="comment" value="comment">
+            </form>
          </div>
      </div>
    </div>

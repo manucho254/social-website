@@ -8,10 +8,10 @@ from accounts.models import Profile
 class Post(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="author")
-    caption = models.CharField(max_length=200,  blank=True, null=True)
+    caption = models.CharField(max_length=200, blank=True, null=True)
     body = models.TextField()
-    post_slug = models.SlugField(max_length=30, blank=True)
-    likes = models.ManyToManyField(User, blank=True, related_name="likes")
+    post_slug = models.SlugField(max_length=30, blank=True, null=True)
+    likes = models.ManyToManyField(User, blank=True,  related_name="likes")
     post_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
     post_thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -52,10 +52,9 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    message_by = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    message_by = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=300)
     commented_on = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=True)
     
     def __str__(self):
         return self.message_by
