@@ -1,13 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@1,500;1,800&display=swap');
+
+body {
+   font-family: 'Alegreya', serif;;
+}
+
+.landing-backgound {
+    background-color: rgb(240, 245, 247);
+}
+
 .searchinput-box {
     width: 450px;
     height: 40px;
     border: hidden;
-    background-color: rgb(205, 215, 219);
+    background-color: rgb(240, 245, 247);
 }
 
 .form-control:focus {
-    background-color: rgb(205, 215, 219);
-    border: none;
+    background-color: rgb(240, 245, 247);
+    border: hidden;
 }
 
 .img {
@@ -15,13 +25,6 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-}
-
-.main-post-image {
-    width: 617px;
-    height: 600px;
-    object-fit: cover;
-    border: none;
 }
 
 .comments {
@@ -72,13 +75,15 @@
     .searchinput-box {
         width: 260px;
     }
-    .main-post-image {
-        width: 387px;
-        height: 363px;
-    }
+    
     .comment-input {
         width: 300px;
     }
+    .nav-small {
+        display: flex;
+        justify-content: center;
+    }
+   
 }
 
 .inactive {
@@ -111,10 +116,6 @@
 }
 
 @media (max-width: 412px) {
-    .main-post-image {
-        width: 310px;
-        height: 363px;
-    }
     .comment-input {
         width: 230px;
     }

@@ -5,25 +5,13 @@ from django.core.files import File
 from django.contrib.auth.models import User
 from accounts.models import Profile
 
-class PublishedManager(models.Manager):
-    def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(status="published")
-
 class Post(models.Model):
-    objects = models.Manager()
-    published = PublishedManager()
-    
-    STATUS_CHOICES = {
-        ('draft', 'Draft'),
-        ('publishe', 'Published')
-    }
-    
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE,  related_name="author")
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="author")
     caption = models.CharField(max_length=200,  blank=True, null=True)
     likes = models.ManyToManyField(User, blank=True, related_name="likes")
     post_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
     post_thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
     created_on = models.DateTimeField(auto_now_add=True)
     
     class Meta:
