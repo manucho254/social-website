@@ -8,7 +8,7 @@ from django.views.generic import CreateView,UpdateView,DeleteView
 
 class LandingPage(View):
     def get(self, request,  *args,  **kwargs):
-        return render(request,  "index.html",  {})
+        return render(request,  "landing_page.html",  {})
 
 class HomeView(View):
     def get(self,  request,  *args,  **kwargs):
