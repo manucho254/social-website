@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {%  block content %}
 
 <section class="p-4">
  <div class="container">
   <div class="row justify-content-center">
-    <div class="col-lg-7 col-sm-12">
+   <div class="col-md-7 col-sm-12">
+        <form method="post">
+        {{ form|crispy }}
+        </form>
+    </div>
+    <div class="col-md-7 col-sm-12">
       {% for post in posts %}
-       <div class="card my-card h-100 bg-light">
+       <div class="card my-card bg-light g-5 mb-3">
          <div class="card-title m-2">
            <div class="d-flex d-flex justify-content-between mb-1">
               <div>
-                <img class="img img-fluid mt-3" src="{{ post.author.profile_image.url }}" alt="user-image">
+                <img class="img img-fluid mt-3" src="{{ post.user_image.url }}" alt="user-image">
                  <span class="h5 my-4">{{ post.author }}</span>
               </div>
               <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
@@ -41,7 +47,7 @@
                 </div>
                 <span class="bold px-4">Happy be here</span>
             </div>
-            <div class="mt-0">
+            <div class="mt-0 mb-2">
                 <div class="comments text-secondary">
                   <p id="allcomments" class="p-2 text-dark">commented</p>
                 </div>
@@ -52,18 +58,6 @@
      </div>
    </div>
   </div>
-</section>
-
-
-<!--folowers-->
-<section>
-
-<div class="container">
-   <div class="d-flex justify-flex-end">
-    <img class="img image-fluid" src="https://images.unsplash.com/photo-1637703283014-7c64ec1d7085?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=100" alt="user-image">
-   </div>
-</div>
-
 </section>
 
 {% endblock content %}
