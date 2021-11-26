@@ -34,6 +34,12 @@ class HomeView(View):
         }
         return render(request,  "homepage.html",  context)
     
+    
+class PostDetail(View):
+    def get(self, request, slug,  *args,  **kwargs):
+        post = Post.objects.get(slug=slug)
+    
 class CreatePost(CreateView):
     pass
+
     

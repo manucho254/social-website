@@ -1,6 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light p-lg-3">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><span class="h2"><strong class="text-info">Manucho<span class="text-dark">social</span></strong></span></a>
+
+     <a class="navbar-brand"  {% if user.is_authenticated %}
+          href="{% url 'home' %}" {% else %}  href="{% url 'landing' %}" {% endif%}>
+        <span class="h2">
+          <strong class="text-info">Manucho<span class="text-dark">social</span>
+          </strong></span>
+      </a>
  
       <div class="row justify-content-lg-center">
       <form class="d-flex">

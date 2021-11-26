@@ -10,6 +10,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="author")
     caption = models.CharField(max_length=200,  blank=True, null=True)
     body = models.TextField()
+    post_slug = models.SlugField(max_length=30, blank=True)
     likes = models.ManyToManyField(User, blank=True, related_name="likes")
     post_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
     post_thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
