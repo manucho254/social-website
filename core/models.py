@@ -52,9 +52,10 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    message_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=300)
     commented_on = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
     
     def __str__(self):
         return self.message

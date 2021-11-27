@@ -1,23 +1,22 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {%  load crispy_forms_tags %}
-
 {% block content %}
 
-
-<section class="p-4 pt-0 font-monospace mt-4">
+<section class="p-4 pt-0 font-monospace  mt-4">
   <div class="row justify-content-center">
-    <div class="col-md-8 col-sm-12">
+    <div class="col-md-8 col-sm-12 ">
        <div class="d-flex justify-content-between mb-4 mt-2">
-         <h3 class="text-info card-header border-0">Update Post</h3>
+         <h3 class="text-info card-header border-0">Delete Post</h3>
          <a href="{% url 'post-detail' object.pk %}" class="btn card-header h4 shadow-none border-0">
            <i class="fa fa-arrow-left"></i><span class="h5"> Back to Post</span>
          </a>
        </div>
-       <div class="card my-card p-3 bg-light">
+      <div class="card my-card p-3 bg-light">
         <form method="post" enctype="multipart/form-data">
          {% csrf_token %}
-           {{ form|crispy }}
-            <button type="submit" class="btn shadow-none btn-success mt-4 rounded-pill px-5">Update</button>
+            <h3 class="mt-2 mb-4 ">Are you sure ?</h3>
+            <p>You are about to delete your post, this action is irreversable !!!</p>
+            <button type="submit" class="btn shadow-none btn-danger mt-4 rounded-pill px-5">Delete</button>
         </form>
      </div>
     </div>
