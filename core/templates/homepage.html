@@ -40,7 +40,7 @@
               <div class="like-caption px-2">
                  <span class="bold">1,000 likes</span>
                 </div>
-                <span class="bold px-4">Happy be here</span>
+                <span class="bold px-4">{{ post.caption }}</span>
             </div>
             <div class="mt-0 mb-2">
                 <div class="comments text-secondary">
@@ -50,7 +50,7 @@
             </div>
           <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>
          </div>
-        {% endfor %}
+      {% endfor %}
      </div>
    </div>
   </div>

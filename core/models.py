@@ -57,7 +57,7 @@ class Comment(models.Model):
     commented_on = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.message_by
+        return self.message
     
     class Meta:
         ordering = ["-commented_on"]

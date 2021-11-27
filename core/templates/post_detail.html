@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block content %}
+{%  block content %}
 
 <section class="p-4">
  <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-7 col-sm-12">
-       <div class="card my-card bg-light g-5 mb-3">
+       <div class="card my-card bg-light g-5 mb-3 position-relative"> 
          <div class="card-title m-2">
            <div class="d-flex d-flex justify-content-between mb-1">
               <div>
                 <img class="img img-fluid mt-3" src="{{ post.user_image.url }}" alt="user-image">
                  <span class="h5 my-4">{{ post.author }}</span>
               </div>
-              <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
+              <a class="btn"><i class="f"></i></a>
+              <a class="btn"><i class="fas fa-ellipsis-v"></i></a>
            </div>
          </div>
           <img src="{{ post.get_post_image }}" class="img-fluid me-sm-0 m-lg-0 p-0 rounded" alt="...">
@@ -39,7 +40,7 @@
               <div class="like-caption px-2">
                  <span class="bold">1,000 likes</span>
                 </div>
-                <span class="bold px-4">Happy be here</span>
+                <span class="bold px-4">{{ post.caption }}</span>
             </div>
             <div class="mt-0 mb-2">
                 <div class="comments text-secondary">
@@ -47,11 +48,7 @@
                 </div>
                  <a class="link text-decoration-none text-dark px-2" href="#">all comments 29..</a>
             </div>
-            <form method="post" class="d-flex">
-             {% csrf_token %}
-              {{ form|crispy }}
-              <input type="submit" class="btn btn-dark rounded-pill" placeholder="comment" value="comment">
-            </form>
+          <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>
          </div>
      </div>
    </div>

@@ -15,11 +15,6 @@ body {
     background-color: rgb(240, 245, 247);
 }
 
-.post-body {
-    height: 50px;
-    text-align: start;
-}
-
 .form-control:focus {
     background-color: rgb(240, 245, 247);
     border: hidden;
@@ -67,6 +62,16 @@ body {
     border: none;
 }
 
+.dropdown-menu {
+    width: 20px ;
+}
+
+.post-body {
+    height: 100px;
+    text-align: start;
+}
+
+
 @media (max-width: 768px){
     .container {
         margin: 0px;
@@ -85,6 +90,17 @@ body {
         width: 300px;
     }
     .nav-small {
+        display: flex;
+        justify-content: center;
+    }
+    .navbar-nav {
+        margin-top: 200px;
+        position: relative;
+        display: flex;
+        width: 100vw;
+    }
+    .navbar-nav ul {
+        position: absolute;
         display: flex;
         justify-content: center;
     }

@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.urls import reverse_lazy
 from .models import Post,Comment
 from django.contrib import messages
 from .forms import CommentModelForm,PostModelForm
@@ -13,27 +14,10 @@ class LandingPage(View):
 class HomeView(View):
     def get(self,  request,  *args,  **kwargs):
         posts = Post.objects.all()
-        form = PostModelForm()
         context = {
             "posts": posts,
-            "form": form
         }
         return render(request,  "homepage.html",  context)
-    
-    def post(self,  request,  *args,  **kwargs):
-        posts = Post.objects.all()
-        form = PostModelForm(request.POST)
-        if form.is_valid():
-            new_post = form.save(commit=False)
-            new_post.author = request.user
-            new_post.save()
-            
-        context = {
-            "posts": posts,
-            "form":form
-        }
-        return render(request,  "homepage.html",  context)
-    
     
 class PostDetailView(View):
     def get(self, request, pk,  *args,  **kwargs):
@@ -63,7 +47,40 @@ class PostDetailView(View):
         }
         return render(request,  "post_detail.html",  context)
     
-class CreatePost(CreateView):
+    
+class CreatePostView(View):
+    def get(self,  request,  *args, **kwargs):
+        form = PostModelForm()
+        context = {
+            "form": form
+        }
+        return render(request,  "post_create.html",  context)
+    
+    def post(self,  request,  *args,  **kwargs):
+        form = PostModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.save()
+            return redirect("home")
+            
+        context = {
+            "form": form
+        }
+        return render(request,  "post_create.html",  context)
+    
+
+class UpdatePostView(UpdateView):
+    model = Post
+    fields = ['caption','body', 'post_image', ]
+    template_name = 'post_update.html'
+    
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('post-detail',  kwargs={'pk': pk})
+
+
+class DeletePostView(DeleteView):
     pass
 
     

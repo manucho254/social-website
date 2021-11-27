@@ -9,25 +9,37 @@
       </a>
  
       <div class="row justify-content-lg-center">
-      <form class="d-flex">
+        <form class="d-flex">
           <input class="searchinput-box form-control rounded-pill my-2" type="search" placeholder="Search" aria-label="Search">
         </form>
       </div>
-     <div class="row">
-      <ul class="navbar-nav mb-0 text-sm-start col-12 position-relative">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#"><span class="h4 text-dark"><i class="fab fa-facebook-messenger text-secondary"></i></span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><span class="text-dark"><i class="far h4 fa-plus-square text-secondary"></i></span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"><i class="fas fa-bell h4 text-secondary"></i></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link"><i class="fa fa-user h4 text-secondary"></i></a>
-          </li>
-      </ul>
+      <div class="row">
+        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul class="navbar-nav d-flex  me-auto mb-2 mb-lg-0 text-sm-start col-lg-12 col-sm-12 position-relative">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#"><span class="h4 text-dark"><i class="fab fa-facebook-messenger text-secondary"></i></span></a>
+            </li>
+            <li class="nav-item">
+              <div class="dropdown">
+                <button class="btn shadow-none" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="far h4 fa-plus-square text-dark"></i>
+                </button>
+                  <ul class="dropdown-menu dropdown-menu-dark position-absolute" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item text-light" href="{% url 'create-post' %}">Create Post</a></li>
+                  </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"><i class="fas fa-bell h4 text-secondary"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"><i class="fa fa-user h4 text-secondary"></i></a>
+            </li>
+        </ul>
+     </div>
     </div>
   </div>
 </nav>
