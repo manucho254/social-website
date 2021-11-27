@@ -3,15 +3,18 @@
 
 {% block content %}
 
-<section class="p-5">
+<section class="p-4">
   <div class="row justify-content-center">
     <div class="col-md-8 col-sm-12">
-        <h3 class="mt-4"> Create Post </h3>
+     <div class="card my-card p-3 bg-light font-monospace">
+        <h3 class="mt-2 mb-4 ">Update Post</h3>
         <form method="post" enctype="multipart/form-data">
          {% csrf_token %}
            {{ form|crispy }}
-          <button type="submit" class="btn btn-success mt-4 rounded-pill px-4">Create</button>
+            <button type="submit" class="btn shadow-none btn-success mt-4 rounded-pill px-5">Update</button>
         </form>
+        <button class="btn w-25 btn-dark mt-2 shadow-none rounded-pill px-5">Back</button>
+     </div>
     </div>
   </div>
 </section>

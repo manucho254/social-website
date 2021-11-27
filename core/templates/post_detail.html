@@ -7,15 +7,17 @@
  <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-7 col-sm-12">
-       <div class="card my-card bg-light g-5 mb-3 position-relative"> 
+       <div class="card my-card bg-light g-5 mb-3"> 
          <div class="card-title m-2">
            <div class="d-flex d-flex justify-content-between mb-1">
               <div>
                 <img class="img img-fluid mt-3" src="{{ post.user_image.url }}" alt="user-image">
                  <span class="h5 my-4">{{ post.author }}</span>
               </div>
-              <a class="btn"><i class="f"></i></a>
-              <a class="btn"><i class="fas fa-ellipsis-v"></i></a>
+              <div>
+                <a class="btn shadow-none" href="{% url 'update-post' post.pk %}"><i class="fas fa-edit text-info"></i></a>
+                <a class="btn shadow-none"><i class="fas fa-trash-alt text-danger"></i></a>
+              </div>
            </div>
          </div>
           <img src="{{ post.get_post_image }}" class="img-fluid me-sm-0 m-lg-0 p-0 rounded" alt="...">
@@ -48,7 +50,6 @@
                 </div>
                  <a class="link text-decoration-none text-dark px-2" href="#">all comments 29..</a>
             </div>
-          <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>
          </div>
      </div>
    </div>
