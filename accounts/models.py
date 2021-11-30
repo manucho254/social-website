@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 GENDER_CHOICES = (
-    ("male", "male"),
-    ("female", "female")
+    ("No Gender", "No Gender"),
+    ("Male", "Male"),
+    ("Female", "Female")
     )
 
 class Profile(models.Model):
@@ -14,7 +15,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=300, blank=True, null=True)
     birthday = models.DateField(max_length=200, blank=True, null=True)
     location = models.CharField(max_length=200, blank=True, null=True)
-    gender = models.CharField(max_length = 20, choices = GENDER_CHOICES, default = 'Enter Gender')
+    gender = models.CharField(max_length = 20, choices = GENDER_CHOICES, default ='No Gender')
     profile_image = models.ImageField(upload_to="profile/",  null=True, blank=True)
     profile_created_on = models.DateTimeField(auto_now_add=True)
 
