@@ -103,7 +103,7 @@ class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'comment_edit.html'
     
     def get_success_url(self):
-        pk = self.kwargs['pk']
+        pk = self.kwargs['post_pk']
         return reverse_lazy('post-detail',  kwargs={'pk': pk})
     
     def test_func(self):
@@ -115,7 +115,7 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = "comment_delete.html"
     
     def get_success_url(self):
-        pk = self.kwargs['pk']
+        pk = self.kwargs['post_pk']
         return reverse_lazy('post-detail',  kwargs={'pk': pk})
     
     def test_func(self):
