@@ -3,7 +3,7 @@ from io import BytesIO
 from PIL import Image
 from django.core.files import File
 from django.contrib.auth.models import User
-from accounts.models import Profile
+from django.template.defaultfilters import slugify
 
 class Post(models.Model):
 
@@ -49,6 +49,11 @@ class Post(models.Model):
         thumbnail = File(thumb_io, name=post_image.caption,)
 
         return thumbnail
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.hiring)
+        super(Post, self).save(*args, **kwargs)
+  
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
