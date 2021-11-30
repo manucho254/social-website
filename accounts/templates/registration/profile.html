@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="conatiner">
+    <div class="row mt-5">
+        <div class="col-md-3 col-sm-6">
+            <a href="{% url 'post-list' %}" class="btn btn-light"> back</a>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="card shadow-sm col-md-8 col-sm-12 border-bottom px-5 pt-3">
+            <img src="{{ profile. profile_image.url }}" alt="profile-image" class="rounded-circle">
+            <h3 class="py-4">{{ profile.first_name }} {{ profile.last_name }}</h3>
+        </div>
+    </div>
+
+
+
+</div>
+
+{% endblock content %}
