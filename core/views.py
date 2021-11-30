@@ -2,10 +2,9 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse_lazy
 from .models import Post,Comment
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-from django.contrib import messages
 from .forms import CommentModelForm,PostModelForm
 from django.views import View
-from django.views.generic import CreateView,UpdateView,DeleteView
+from django.views.generic import UpdateView,DeleteView
 
 
 class LandingPage(View):
