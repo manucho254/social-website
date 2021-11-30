@@ -23,10 +23,12 @@ class PostDetailView(View):
     def get(self, request, pk,  *args,  **kwargs):
         post = Post.objects.get(pk=pk)
         form = CommentModelForm()
+        comments = Comment.objects.filter(post=post)
         
         context = {
             "post": post,
-            "form": form
+            "form": form,
+            "comments": comments
         }
         
         return render(request,  "post_detail.html",  context)
@@ -34,6 +36,7 @@ class PostDetailView(View):
     def post(self,  request, pk,  *args,  **kwargs):
         post = Post.objects.get(pk=pk)
         form = CommentModelForm(request.POST)
+        comments = Comment.objects.filter(post=post)
         
         if form.is_valid():
             new_comment = form.save(commit=False)
@@ -42,8 +45,9 @@ class PostDetailView(View):
             new_comment.save()
             
         context = {
-            "posts": post,
-            "form": form
+            "post": post,
+            "form": form,
+            "comments": comments
         }
         return render(request,  "post_detail.html",  context)
     

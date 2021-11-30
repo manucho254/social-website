@@ -32,23 +32,27 @@
                        <span class="h5 mt-2">{{ post.likes.all.count }}</span>
                      </div>
                      <div>
-                       <button class="btn border-none"><i class="fa h4 fa-comment text-secondary" aria-hidden="true"></i></button>
-                       <span class="h5">28</span>
+                       <span class="me-2"><i class="fa h4 fa-comment text-secondary" aria-hidden="true"></i></span>
+                      <span class="h5">28</span>
                      </div>
                     <div>
                      <button class="btn"><i class="far h4 text-secondary fa-paper-plane px-5"></i></button>
                     </div>
                 </div>
-              <div class="like-caption px-2">
-                 <span class="bold">1,000 likes</span>
-                </div>
+
                 <span class="bold px-4">{{ post.caption }}</span>
             </div>
             <div class="mt-0 mb-2">
                 <div class="comments text-secondary">
-                  <p id="allcomments" class="p-2 text-dark">commented</p>
-                </div>
-                 <a class="link text-decoration-none text-dark px-2" href="#">all comments 29..</a>
+                  {% for comment in comments %}
+                    <p id="allcomments" class="text-dark"> {{ comment }} <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span> </p>
+                  {% endfor %}
+                  </div>
+                <form method="post" class="d-flex">
+                  {% csrf_token %}
+                    {{ form|crispy }}
+                      <button type="submit" class="btn shadow-none btn-success rounded-pill px-2">comment</button>
+                </form>
             </div>
          </div>
      </div>

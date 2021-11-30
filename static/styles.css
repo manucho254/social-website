@@ -28,9 +28,12 @@ body {
 }
 
 .comments {
-    max-height: 40px; 
-    overflow-y: hidden;
+    max-height: 100px;
+    padding: 10px; 
+    margin: 5px;
+    overflow-y: scroll;
     background-color: rgb(247, 250, 252);
+    
 }
 
 .comment-input{
