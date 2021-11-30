@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+<div class="container p-sm-2">
+    <div class="row justify-content-center mt-5">
+        <div class="card shadow-sm col-md-12 col-sm-12 border-bottom px-5 pt-3 font-monospace">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 d-flex justify-content-end px-2">
+                    <a href="{% url 'home' %}" class="btn btn-dark shadow-none px-2 me-2"> {% trans 'back to posts' %} </a>
+                    <a href="{% url 'account_logout' %}" class="btn btn-danger shadow-none"> {% trans 'logout' %}</a>
+                </div>
+            </div>
+            <div class="d-flex">
+             <img src="{{ profile.profile_image.url }}" alt="profile-image" class="rounded-circle mb-3"  width="150", height="150">
+             <h3 class="py-4 px-4">@ {{ profile.username }}</h3>
+            </div>
+            {% if profile.first_name and  profile.last_name  %}
+              <h3 class="py-4">{{ profile.first_name }} {{ profile.last_name }}</h3>
+            {% endif %}
+            {% if profile.bio %}
+              <h3 class="py-4">{{ profile.bio }}</h3>
+            {% endif %}
+            {% if birthday %}
+              <h3 class="py-4">{{ profile.birthday }}</h3>
+            {% endif %}
+            {% if profile.location %}
+              <h3 class="py-4">{{ profile.location }}</h3>
+            {% endif %}
+        </div>
+    </div>
+
+  <!-- all posts from user -->
+   <div class="row my-3">
+    {% for post in posts %}
+      <div class="col-md-4 col-sm-12" >
+         <div class="card my-card bg-light g-5 mb-3 position-relative"> 
+            <div class="card-title m-2">
+            <div class="d-flex d-flex justify-content-between mb-1">
+                <div>
+                <img class="img img-fluid mt-3" src="{{ profile.profile_image.url }}" alt="user-image">
+                    <span class="h5 my-4">{{ post.author }}</span>
+                </div>
+                <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
+            </div>
+            </div>
+            <img src="{{ post.get_post_image }}" class="img-fluid me-sm-0 m-lg-0 p-0 rounded" alt="...">
+            <div class="mt-3 text-secondary">
+                <div class="d-flex justify-content-evenly">
+                    <div>
+                        <button id="like" class="btn"><i class="fa fa-thumbs-up h4 text-secondary" aria-hidden="true"></i></button>
+                        <span class="h5 mt-2">1</span>
+                        </div>
+                        <div>
+                        <button id="deslike" class="btn"><i class="fa fa-thumbs-down h4 text-secondary" aria-hidden="true"></i></button>
+                        <span class="h5 mt-2">{{ post.likes.all.count }}</span>
+                        </div>
+                        <div>
+                        <button class="btn border-none"><i class="fa h4 fa-comment text-secondary" aria-hidden="true"></i></button>
+                        <span class="h5">28</span>
+                        </div>
+                    <div>
+                        <button class="btn"><i class="far h4 text-secondary fa-paper-plane px-5"></i></button>
+                    </div>
+                </div>
+                <div class="like-caption px-2">
+                    <span class="bold">1,000 likes</span>
+                </div>
+                <span class="bold px-4">{{ post.caption }}</span>
+            </div>
+            <div class="mt-0 mb-2">
+                <div class="comments text-secondary">
+                    {% for comment in comments %}
+                    <p class="text-dark">{{ comment.author }}:  {{ comment }} 
+                        <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span>
+                    </p>
+                    {% endfor %}
+                    <a class="link text-decoration-none text-dark px-2" href="#">all comments 29..</a>
+                </div>
+            </div>
+            <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+</div>
+
+{% endblock content %}
