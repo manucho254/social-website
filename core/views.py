@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse_lazy
 from .models import Post,Comment
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.contrib import messages
 from .forms import CommentModelForm,PostModelForm
 from django.views import View
@@ -11,7 +12,7 @@ class LandingPage(View):
     def get(self, request,  *args,  **kwargs):
         return render(request,  "landing_page.html",  {})
 
-class HomeView(View):
+class HomeView(LoginRequiredMixin ,View):
     def get(self,  request,  *args,  **kwargs):
         posts = Post.objects.all()
         context = {
@@ -19,9 +20,9 @@ class HomeView(View):
         }
         return render(request,  "homepage.html",  context)
     
-class PostDetailView(View):
+class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, pk,  *args,  **kwargs):
-        post = Post.objects.get(pk=pk)
+        post =  get_object_or_404(Post, pk=pk)
         form = CommentModelForm()
         comments = Comment.objects.filter(post=post)
         
@@ -34,7 +35,7 @@ class PostDetailView(View):
         return render(request,  "post_detail.html",  context)
     
     def post(self,  request, pk,  *args,  **kwargs):
-        post = Post.objects.get(pk=pk)
+        post = get_object_or_404(Post, pk=pk)
         form = CommentModelForm(request.POST)
         comments = Comment.objects.filter(post=post)
         
@@ -52,7 +53,7 @@ class PostDetailView(View):
         return render(request,  "post_detail.html",  context)
     
     
-class CreatePostView(View):
+class CreatePostView(LoginRequiredMixin, View):
     def get(self,  request,  *args, **kwargs):
         form = PostModelForm()
         context = {
@@ -74,7 +75,7 @@ class CreatePostView(View):
         return render(request,  "post_create.html",  context)
     
 
-class UpdatePostView(UpdateView):
+class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['caption','body', 'post_image', ]
     template_name = 'post_update.html'
@@ -82,10 +83,41 @@ class UpdatePostView(UpdateView):
     def get_success_url(self):
         pk = self.kwargs['pk']
         return reverse_lazy('post-detail',  kwargs={'pk': pk})
+    
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
 
-
-class DeletePostView(DeleteView):
+class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = "post_delete.html"
     success_url = reverse_lazy('home')
     
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
+    
+class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Comment
+    fields = ['message']
+    template_name = 'comment_edit.html'
+    
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('post-detail',  kwargs={'pk': pk})
+    
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author
+
+class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Comment
+    template_name = "comment_delete.html"
+    
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('post-detail',  kwargs={'pk': pk})
+    
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.author

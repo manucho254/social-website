@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@1,500;1,800&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@1,500;1,800&display=swap");
 body {
-   font-family: 'Alegreya', serif;;
+    font-family: "Alegreya", serif;
 }
 
 .landing-backgound {
@@ -29,31 +28,30 @@ body {
 
 .comments {
     max-height: 100px;
-    padding: 10px; 
+    padding: 10px;
     margin: 5px;
     overflow-y: scroll;
     background-color: rgb(247, 250, 252);
-    
 }
 
-.comment-input{
-    width: 500px;
+.comment-input {
+    width: 400px;
     background-color: rgb(205, 215, 219);
 }
 
 .comment-flex {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     font-size: 20px;
 }
 
-.comment-flex  input {
+.comment-flex input {
     margin-left: 10px;
 }
 
 .like-caption {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     font-size: 20px;
 }
 
@@ -66,7 +64,7 @@ body {
 }
 
 .dropdown-menu {
-    width: 20px ;
+    width: 20px;
 }
 
 .post-body {
@@ -74,8 +72,7 @@ body {
     text-align: start;
 }
 
-
-@media (max-width: 768px){
+@media (max-width: 768px) {
     .container {
         margin: 0px;
         padding: 0px;
@@ -86,28 +83,15 @@ body {
         width: 100%;
     }
     .searchinput-box {
-        width: 260px;
+        width: auto;
     }
-    
     .comment-input {
-        width: 300px;
+        width: auto;
     }
     .nav-small {
         display: flex;
         justify-content: center;
     }
-    .navbar-nav {
-        margin-top: 200px;
-        position: relative;
-        display: flex;
-        width: 100vw;
-    }
-    .navbar-nav ul {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-    }
-   
 }
 
 .inactive {
@@ -145,7 +129,7 @@ body {
     }
     .like-caption {
         display: flex;
-        justify-content:flex-start;
+        justify-content: flex-start;
         font-size: 15px;
     }
     .navbar {
@@ -155,6 +139,4 @@ body {
         display: flex;
         justify-content: space-between;
     }
-    
 }
-

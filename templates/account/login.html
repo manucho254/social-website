@@ -9,9 +9,9 @@
    <div class="col-lg-6 col-sm-12">
     <div class="card my-card bg-light">
       <h1 class="card-header border-0 d-flex justify-content-center">{% trans "Sign in" %}</h1>
-     <div class=" p-4">
+     <div class="p-4 font-monospace">
 
-      <form class="login" method="POST" action="{% url 'account_login' %}">
+      <form class="login " method="POST" action="{% url 'account_login' %}">
         {% csrf_token %}
           {{ form|crispy }}
         {% if redirect_field_value %}

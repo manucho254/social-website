@@ -44,7 +44,11 @@
             </div>
             <div class="mt-0 mb-2">
                 <div class="comments text-secondary">
-                  <p id="allcomments" class="p-2 text-dark">commented</p>
+                  {% for comment in comments %}
+                    <p class="text-dark">{{ comment.author }}:  {{ comment }} 
+                       <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span>
+                    </p>
+                  {% endfor %}
                 </div>
                  <a class="link text-decoration-none text-dark px-2" href="#">all comments 29..</a>
             </div>

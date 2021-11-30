@@ -50,7 +50,6 @@ class Post(models.Model):
 
         return thumbnail
 
-
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=300)
