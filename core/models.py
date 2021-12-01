@@ -27,7 +27,7 @@ class Post(models.Model):
             return 'http://127.0.0.1:8000' + self.post_image.url
         return ''
     
-    def get_post_mbnail(self):
+    def get_post_thumbnail(self):
         if self.post_thumbnail:
             return 'http://127.0.0.1:8000' + self.post_image.url
         else:
