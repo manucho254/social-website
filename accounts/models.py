@@ -19,7 +19,7 @@ class Profile(models.Model):
     birthday = models.DateField(max_length=200, blank=True, null=True)
     location = models.CharField(max_length=200, blank=True, null=True)
     gender = models.CharField(max_length = 20, choices = GENDER_CHOICES, default ='No Gender')
-    profile_image = models.ImageField(upload_to="profile/",  default="media/default_images/default.jpg",  blank=True,)
+    profile_image = models.ImageField(upload_to="profile/",  default="media/profile_images/default.jpg",  blank=True,)
     profile_created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
