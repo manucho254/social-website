@@ -51,7 +51,7 @@ class Post(models.Model):
         return thumbnail
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.hiring)
+        self.slug = slugify(self.caption)
         super(Post, self).save(*args, **kwargs)
   
 
