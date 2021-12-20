@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from accounts.models import Profile
 from django.urls import reverse_lazy
 from .models import Post,Comment
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
@@ -120,3 +121,11 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
+    
+# addding a follower
+class AddFollower(LoginRequiredMixin,  View):
+    def post(self, request, pk,  *args, **kwargs):
+        profile = Profile.objects.get(pk=pk)
+        profile.followers.add(request.user)
+        
+        return redirect("profile",  pk=profile.pk)
