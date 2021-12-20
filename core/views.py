@@ -121,11 +121,3 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
-    
-# addding a follower
-class AddFollower(LoginRequiredMixin,  View):
-    def post(self, request, pk,  *args, **kwargs):
-        profile = Profile.objects.get(pk=pk)
-        profile.followers.add(request.user)
-        
-        return redirect("profile",  pk=profile.pk)

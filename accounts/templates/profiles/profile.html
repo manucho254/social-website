@@ -38,6 +38,23 @@
               <h3 class="py-4">{{ profile.location }}</h3>
             {% endif %}
         </div>
+        <p class="mb-3 text-dark">
+          <span class="text-secondary h4">Number of followers: </span> {{ number_of_followers }}
+        </p>
+        {% if user == request.user %}
+        {% else %}
+        {% if is_following %}
+          <form method="POST" action="{% url 'remove-follower' profile.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-danger">unfollow</button>
+          </form>
+        {% else %}
+            <form method="POST" action="{% url 'add-follower' profile.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-info">follow</button>
+            </form>
+        {% endif %}
+        {% endif %}
     </div>
 
   <!-- all posts from user -->

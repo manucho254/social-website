@@ -12,10 +12,26 @@ class ProfileView(LoginRequiredMixin, View):
         user = profile.user
         posts = Post.objects.filter(author=user).order_by('-created_on')
         
+        followers = profile.followers.all()
+        
+        if len(followers) == 0:
+            is_following = False
+        
+        for follower in followers:
+            if follower == request.user:
+                is_following = True
+                break
+            else:
+                is_following = False
+        number_of_followers = len(followers)
+        
         context = {
             'profile': profile,
             'user': user,
-            'posts' : posts
+            'posts' : posts,
+            'number_of_followers' :  number_of_followers,
+            'is_following': is_following,
+            
         }
         
         return render(request,  "profiles/profile.html",  context)
@@ -32,3 +48,18 @@ class EditProfileView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     def test_func(self):
         profile = self.get_object()
         return self.request.user == profile.user
+    
+# addding a follower
+class AddFollowerView(LoginRequiredMixin,  View):
+    def post(self, request, pk,  *args, **kwargs):
+        profile = Profile.objects.get(pk=pk)
+        profile.followers.add(request.user)
+        
+        return redirect("profile",  pk=profile.pk)
+    
+class RemoveFollowerView(LoginRequiredMixin,  View):
+    def post(self, request, pk,  *args, **kwargs):
+        profile = Profile.objects.get(pk=pk)
+        profile.followers.remove(request.user)
+        
+        return redirect("profile",  pk=profile.pk)
