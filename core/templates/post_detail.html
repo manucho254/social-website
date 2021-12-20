@@ -10,10 +10,10 @@
        <div class="card my-card bg-light g-5 mb-3"> 
          <div class="card-title m-2">
            <div class="d-flex d-flex justify-content-between mb-1">
-              <div>
-                <img class="img img-fluid mt-3" src="{{ post.user_image.url }}" alt="user-image">
-                 <span class="h5 my-4">{{ post.author }}</span>
-              </div>
+            <a href="{% url 'profile' user.profile.pk %}" class="text-decoration-none text-secondary">
+              <img class="img img-fluid mt-3" src="{{ user.profile.profile_image.url }}" alt="user-image">
+                <span class="h5 my-4 px-1">{{ post.author }}</span>
+            </a>
               {% if request.user == post.author %}
                <div>
                   <a class="btn shadow-none" href="{% url 'update-post' post.pk %}">
