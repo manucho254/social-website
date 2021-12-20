@@ -72,28 +72,6 @@ body {
     text-align: start;
 }
 
-@media (max-width: 768px) {
-    .container {
-        margin: 0px;
-        padding: 0px;
-    }
-    .my-card {
-        margin-right: 0px;
-        padding-left: 0px;
-        width: 100%;
-    }
-    .searchinput-box {
-        width: auto;
-    }
-    .comment-input {
-        width: auto;
-    }
-    .nav-small {
-        display: flex;
-        justify-content: center;
-    }
-}
-
 .inactive {
     border: none;
     background-color: transparent;
@@ -132,11 +110,30 @@ body {
         justify-content: flex-start;
         font-size: 15px;
     }
-    .navbar {
-        padding: 0;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 0px;
+        padding: 0px;
     }
-    .nav-small {
-        display: flex;
-        justify-content: space-between;
+    .my-card {
+        margin-right: 0px;
+        padding-left: 0px;
+        width: 100%;
     }
+    .searchinput-box {
+        width: auto;
+    }
+    .comment-input {
+        width: auto;
+    }
+}
+
+display: flex;
+justify-content: flex-start;
+font-size: 15px;
+
+}
+
 }
