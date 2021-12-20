@@ -20,10 +20,11 @@ class Profile(models.Model):
     location = models.CharField(max_length=200, blank=True, null=True)
     gender = models.CharField(max_length = 20, choices = GENDER_CHOICES, default ='No Gender')
     profile_image = models.ImageField(upload_to="profile_images/",  default="profile_images/default.jpg", blank=True)
+    followers = models.ManyToManyField(User, blank=True, related_name="followers")
     profile_created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "{}".format(self.username)
+        return "{}".format(self.user)
     
 @receiver(post_save, sender=User) 
 def create_profile(sender,  instance, created, **kwargs):
