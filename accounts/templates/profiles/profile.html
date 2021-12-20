@@ -20,7 +20,9 @@
                        <h3 class="py-4 px-4">@ {{ profile.username }}</h3>
                 {% endif %}
                 {% if request.user == user %}
-                  <a href="{% url 'edit-profile' profile.pk %}" class="btn btn-danger shadow-none">Edit</a>
+                 <a class="btn shadow-none" href="{% url 'edit-profile' profile.pk %}">
+                    <i class="fas fa-edit text-info"></i>
+                  </a>
                 {% endif %}
             </div>
             {% if profile.first_name and  profile.last_name  %}
