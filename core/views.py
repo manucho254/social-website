@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from accounts.models import Profile
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import Post,Comment
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
@@ -15,8 +16,10 @@ class LandingPage(View):
 class HomeView(LoginRequiredMixin ,View):
     def get(self,  request,  *args,  **kwargs):
         posts = Post.objects.all()
+        
         context = {
             "posts": posts,
+
         }
         return render(request,  "homepage.html",  context)
     
@@ -26,10 +29,13 @@ class PostDetailView(LoginRequiredMixin, View):
         form = CommentModelForm()
         comments = Comment.objects.filter(post=post)
         
+        num_of_comments = len(comments)
+        
         context = {
             "post": post,
             "form": form,
-            "comments": comments
+            "comments": comments,
+             "num_of_comments": num_of_comments,
         }
         
         return render(request,  "post_detail.html",  context)
@@ -48,7 +54,7 @@ class PostDetailView(LoginRequiredMixin, View):
         context = {
             "post": post,
             "form": form,
-            "comments": comments
+            "comments": comments,
         }
         return render(request,  "post_detail.html",  context)
     
@@ -121,3 +127,26 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
+    
+#follow and unfollow views
+
+
+class LikePostView(LoginRequiredMixin,  View):
+    def post(self, request, pk,  *args, **kwargs):
+        post = Post.objects.get(pk=pk)
+        
+        is_like = False
+        
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+        if not is_like:
+            post.likes.add(request.user)
+            
+        if is_like:
+            post.likes.remove(request.user)
+        
+        next = request.POST.get("next", "/")
+        
+        return HttpResponseRedirect(next)

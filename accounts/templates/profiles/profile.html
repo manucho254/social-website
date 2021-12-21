@@ -8,7 +8,7 @@
         <div class="card shadow-sm col-md-12 col-sm-12 border-bottom px-5 pt-3">
             <div class="row">
                 <div class="col-md-12 col-sm-12 d-flex justify-content-end px-2">
-                    <a href="{% url 'home' %}" class="btn btn-dark shadow-none px-2 me-2"> {% trans 'back' %} </a>
+                    <a href="{% url 'home' %}" class="btn btn-dark shadow-none px-2 me-2 mb-2"> {% trans 'back' %} </a>
                     {% if request.user == user %}
                       <a href="{% url 'account_logout' %}" class="btn btn-danger shadow-none"> {% trans 'logout' %}</a>
                     {% endif %}
@@ -19,7 +19,7 @@
                    <img src="{{ profile.profile_image.url }}" alt="profile-image" class="rounded-circle mb-3"  width="150", height="150">
                 {% endif  %}
                 {% if profile.user  %}
-                   <p class="py-4 px-4">@ {{ profile.user }}</p>
+                   <h5 class="py-4 px-4 text-capitalized font-weight-bold">@ {{ profile.user }}</h5>
                 {% endif %}
                 {% if request.user == user %}
                  <a class="btn shadow-none" href="{% url 'edit-profile' profile.pk %}">

@@ -12,6 +12,7 @@ class Post(models.Model):
     body = models.TextField()
     post_slug = models.SlugField(max_length=30, blank=True, null=True)
     likes = models.ManyToManyField(User, blank=True,  related_name="likes")
+    comments = models.ManyToManyField("Comment", blank=True,  related_name="comments")
     post_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
     post_thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
