@@ -12,7 +12,6 @@ GENDER_CHOICES = (
 
 class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, verbose_name='user', related_name='profile',  on_delete=models.CASCADE)
-    username = models.CharField(max_length=100, blank=True, null=True)
     first_name = models.CharField(max_length=200, blank=True, null=True)
     last_name = models.CharField(max_length=200, blank=True, null=True)
     bio = models.CharField(max_length=300, blank=True, null=True)

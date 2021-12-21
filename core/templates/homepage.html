@@ -11,14 +11,16 @@
        <div class="card my-card bg-light g-5 mb-3"> 
          <div class="card-title m-2">
            <div class="d-flex d-flex justify-content-between mb-1">
-              <a href="{% url 'profile' user.profile.pk %}" class="text-decoration-none text-secondary">
-                <img class="img img-fluid mt-3" src="{{ user.profile.profile_image.url }}" alt="user-image">
+              <a href="{% url 'profile' post.author.profile.pk %}" class="text-decoration-none text-secondary">
+                <img class="img img-fluid mt-3" src="{{ post.author.profile.profile_image.url }}" alt="user-image">
                   <span class="h5 my-4 px-1">{{ post.author }}</span>
               </a>
               <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
            </div>
          </div>
-          <img src="{{ post.get_post_image }}" class="img-fluid me-sm-0 m-lg-0 p-0 rounded" alt="...">
+          
+            <img src="{{ post.get_post_image }}" class="img-fluid me-sm-0 m-lg-0 p-0 rounded" alt="...">
+          
          <span class="position-relative">
          
             <div class="mt-3 text-secondary">

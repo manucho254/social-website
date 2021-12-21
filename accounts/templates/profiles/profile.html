@@ -3,58 +3,67 @@
 {% block content %}
 {% load static %}
 
-<div class="container p-sm-2">
+<div class="container p-sm-2 font-monospace">
     <div class="row justify-content-center mt-5">
-        <div class="card shadow-sm col-md-12 col-sm-12 border-bottom px-5 pt-3 font-monospace">
+        <div class="card shadow-sm col-md-12 col-sm-12 border-bottom px-5 pt-3">
             <div class="row">
                 <div class="col-md-12 col-sm-12 d-flex justify-content-end px-2">
-                    <a href="{% url 'home' %}" class="btn btn-dark shadow-none px-2 me-2"> {% trans 'back to posts' %} </a>
-                    <a href="{% url 'account_logout' %}" class="btn btn-danger shadow-none"> {% trans 'logout' %}</a>
+                    <a href="{% url 'home' %}" class="btn btn-dark shadow-none px-2 me-2"> {% trans 'back' %} </a>
+                    {% if request.user == user %}
+                      <a href="{% url 'account_logout' %}" class="btn btn-danger shadow-none"> {% trans 'logout' %}</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="d-flex">
                 {% if profile.profile_image %}
                    <img src="{{ profile.profile_image.url }}" alt="profile-image" class="rounded-circle mb-3"  width="150", height="150">
                 {% endif  %}
-                {% if profile.username  %}
-                       <h3 class="py-4 px-4">@ {{ profile.username }}</h3>
+                {% if profile.user  %}
+                   <p class="py-4 px-4">@ {{ profile.user }}</p>
                 {% endif %}
                 {% if request.user == user %}
                  <a class="btn shadow-none" href="{% url 'edit-profile' profile.pk %}">
                     <i class="fas fa-edit text-info"></i>
                   </a>
                 {% endif %}
+                {% if user == request.user %}
+                {% else %}
+                {% if is_following %}
+                <form method="POST" action="{% url 'remove-follower' profile.pk %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">unfollow</button>
+                </form>
+                {% else %}
+                    <form method="POST" action="{% url 'add-follower' profile.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-info">follow</button>
+                    </form>
+                {% endif %}
+                {% endif %}
             </div>
             {% if profile.first_name and  profile.last_name  %}
-              <h3 class="py-4">{{ profile.first_name }} {{ profile.last_name }}</h3>
+              <h5 class="mt-1 font-weight-bold">{{ profile.first_name }} {{ profile.last_name }}</h5>
             {% endif %}
             {% if profile.bio %}
-              <h3 class="py-4">{{ profile.bio }}</h3>
-            {% endif %}
-            {% if birthday %}
-              <h3 class="py-4">{{ profile.birthday }}</h3>
+              <p>{{ profile.bio }}</p>
             {% endif %}
             {% if profile.location %}
-              <h3 class="py-4">{{ profile.location }}</h3>
+              <p>{{ profile.location }}</p>
+            {% endif %}
+            {% if birthday %}
+              <p>{{ profile.birthday }}</p>
             {% endif %}
         </div>
-        <p class="mb-3 text-dark">
-          <span class="text-secondary h4">Number of followers: </span> {{ number_of_followers }}
-        </p>
-        {% if user == request.user %}
-        {% else %}
-        {% if is_following %}
-          <form method="POST" action="{% url 'remove-follower' profile.pk %}">
-              {% csrf_token %}
-              <button class="btn btn-danger">unfollow</button>
-          </form>
-        {% else %}
-            <form method="POST" action="{% url 'add-follower' profile.pk %}">
-                {% csrf_token %}
-                <button class="btn btn-info">follow</button>
-            </form>
-        {% endif %}
-        {% endif %}
+        <div class="d-flex mt-2">
+           <p class="mb-1 text-dark">
+             <span class="text-secondary h5">followers</span>
+               <p class=px-3>({{ number_of_followers }})</p>
+           </p>
+           <p class="mb-1 text-dark">
+            <span class="text-secondary h5">following</span>
+              <p class=px-3>(0)</p>
+          </p>
+        </div>
     </div>
 
   <!-- all posts from user -->
