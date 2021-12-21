@@ -132,6 +132,10 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 class LikePostView(LoginRequiredMixin,  View):
+    def get(self,  request,pk, *args, **kwargs):
+        template_name = "like.html"
+        return render(request, template_name, {})
+    
     def post(self, request, pk,  *args, **kwargs):
         post = Post.objects.get(pk=pk)
         
@@ -141,12 +145,11 @@ class LikePostView(LoginRequiredMixin,  View):
             if like == request.user:
                 is_like = True
                 break
+        
         if not is_like:
             post.likes.add(request.user)
             
         if is_like:
             post.likes.remove(request.user)
-        
-        next = request.POST.get("next", "/")
-        
-        return HttpResponseRedirect(next)
+
+        return HttpResponseRedirect("like")

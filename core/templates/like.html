@@ -1,0 +1,7 @@
+<form hx-post="{% url 'like' post.pk %}" hx-swap="outerHTML">
+    {% csrf_token %}
+    <input type="hidden" name="next" value='{{ request.path }}'>
+    <button type="submit" class="btn">
+      <i class="fa fa-thumbs-up h4 text-secondary"></i>
+    </button>
+  </form>
