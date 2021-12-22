@@ -1,7 +1,28 @@
 {% load static %}
+      
         <script src="{% static 'js/bootstrap.bundle.min.js' %}" async defer></script>
         <script src="{% static 'script.js' %}" async defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://unpkg.com/htmx.org@1.6.1" integrity="sha384-tvG/2mnCFmGQzYC1Oh3qxQ7CkQ9kMzYjWZSNtrRZygHPDDqottzEJsqS4oUVodhW" crossorigin="anonymous"></script>
-        
+        {% comment %} <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+        <script>
+                var infinite = new Waypoint.Infinite({
+                element: $('.infinite-container')[0],
+                handler: function(direction) {
+
+                },
+                offset: 'bottom-in-view',
+
+                onBeforePageLoad: function () {
+                $('.spinner-border').show();
+                },
+                onAfterPageLoad: function () {
+                $('.spinner-border').hide();
+                }
+
+                });
+        </script>
+         {% endcomment %}
         
