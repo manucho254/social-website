@@ -1,27 +1,8 @@
 {% load crispy_forms_tags %}
+     
+    {% include "comment_data.html" %}
 
     <form  hx-post="{% url 'post-detail'  post.pk %}" hx-swap="outerHTML">
-        <div class="mt-0 mb-2">
-            <div class="comments text-secondary font-monospace">
-              {% for comment in comments %}
-                 {% if comment %}
-                  <p class="text-dark">{{ comment.author }}:  {{ comment }} 
-                      <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span>
-                     {% if request.user == comment.author  %}
-                        <a class="btn shadow-none " href="{% url 'delete-comment' post.pk comment.pk %}">
-                            <i class="fas fa-trash-alt text-danger"></i>
-                        </a>
-                        <a class="btn shadow-none " href="{% url 'edit-comment' post.pk comment.pk %}">
-                          <i class="fas fa-edit text-info"></i>
-                        </a>
-                     {% endif %}
-                   </p>
-                   {% endif %}
-                {% empty %}
-                   No comments, be the first to comment
-              {% endfor %}
-            </div>
-        </div>
          <div class="d-flex">
             {% csrf_token %}
                 {{ form|crispy }}

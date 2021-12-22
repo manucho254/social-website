@@ -20,27 +20,17 @@ class HomeView(LoginRequiredMixin ,View):
         paginator = Paginator(posts, 5) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
+        form = CommentModelForm()
         
         context = {
             "posts": posts,
             "page_obj": page_obj,
+            "form": form
         }
         return render(request,  "homepage.html",  context)
     
-class CommentView(LoginRequiredMixin,  View):
-    def get(self,  request, pk , *args, **kwargs):
-        template_name = "comment_form.html"
-        post = Post.objects.get(pk=pk)
-        form = CommentModelForm()
-        
-        context = {
-            "post": post,
-            "form": form
-        }
-        return render(request, template_name, context)
-    
-    def post(self, request, pk,  *args, **kwargs):
-        post = Post.objects.get(pk=pk)
+    def post(self,  request, pk,  *args,  **kwargs):
+        post = get_object_or_404(Post, pk=pk)
         form = CommentModelForm(request.POST)
         comments = Comment.objects.filter(post=post)
         
@@ -55,7 +45,21 @@ class CommentView(LoginRequiredMixin,  View):
             "form": form,
             "comments": comments,
         }
-        return render(request,  "homepage.html",  context)
+        return render(request,  "comment_form.html",  context)
+    
+class CommentView(LoginRequiredMixin, View):
+    def get(self,  request,  pk ,  *args, **kwargs):
+        post = get_object_or_404(Post, pk=pk)
+        comments = Comment.objects.filter(post=post)
+        template_name = "comment_data.html"
+        
+        context = {
+            "comments": comments,
+            "post": post
+        }
+        
+        return render(request,  template_name,  context)
+
     
 class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, pk,  *args,  **kwargs):

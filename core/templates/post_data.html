@@ -5,8 +5,10 @@
         <img class="img img-fluid mt-3" src="{{ post.author.profile.profile_image.url }}" alt="user-image">
             <span class="h5 my-4 px-1">{{ post.author }}</span>
         </a>
-        <button class="btn"><i class="fas fa-ellipsis-v"></i></button>
-    </div>
+        <button class="btn">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+      </div>
     </div>
     
     <img src="{{ post.get_post_image }}" class="img-fluid me-sm-0 m-lg-0 p-0 rounded" alt="...">
@@ -17,18 +19,22 @@
                 {% include "like_form.html" %}
             </div>
             <div>
-                <button class="btn border-none"><i class="fa h4 fa-comment text-secondary" aria-hidden="true"></i></button>
-                <span class="h5">{{ post.comments.all.count }}</span>
+                <button class="btn border-none">
+                    <i class="fa h4 fa-comment text-secondary" aria-hidden="true"></i>
+                </button>
+                  <span class="h5">{{ post.comments.all.count }}</span>
             </div>
             <div>
-            <button class="btn"><i class="far h4 text-secondary fa-paper-plane px-5"></i></button>
+               <button class="btn">
+                   <i class="far h4 text-secondary fa-paper-plane px-5"></i>
+               </button>
             </div>
         </div>
         <h5 class="font-wieght-bold p-3">{{ post.caption }}</h5>
     </div>
+    {% include "comment_form.html" %}
     <span class="position-relative">
         <div class="mt-0 mb-2">
-            
         </div>
         <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>
     </span>
