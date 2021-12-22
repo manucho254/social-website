@@ -21,13 +21,19 @@
               <input class="searchinput-box form-control rounded-pill my-2" type="search" placeholder="Search" aria-label="Search">
             </form>
               <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{% url 'home' %}"><span class="h5 text-dark">
+                  <i class="fa fa-home" aria-hidden="true"></i></span>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="#"><span class="h4 text-dark">
                   <i class="fab fa-facebook-messenger text-secondary"></i></span>
                 </a>
               </li>
+
               <li class="nav-item dropdown">
                   <button class="btn shadow-none" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="far h4 fa-plus-square text-dark"></i>
+                      <i class="far h4 fa-plus-square "></i>
                   </button>
                     <ul class="dropdown-menu dropdown-menu-dark dropup">
                       <li><a class="dropdown-item text-light" href="{% url 'create-post' %}">Create Post</a></li>

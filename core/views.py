@@ -45,21 +45,7 @@ class HomeView(LoginRequiredMixin ,View):
             "form": form,
             "comments": comments,
         }
-        return render(request,  "comment_form.html",  context)
-    
-class CommentView(LoginRequiredMixin, View):
-    def get(self,  request,  pk ,  *args, **kwargs):
-        post = get_object_or_404(Post, pk=pk)
-        comments = Comment.objects.filter(post=post)
-        template_name = "comment_data.html"
-        
-        context = {
-            "comments": comments,
-            "post": post
-        }
-        
-        return render(request,  template_name,  context)
-
+        return render(request,  "partials/comment_form.html",  context)
     
 class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, pk,  *args,  **kwargs):
@@ -77,7 +63,7 @@ class PostDetailView(LoginRequiredMixin, View):
         }
         
         return render(request,  "post_detail.html",  context)
-    
+     
     def post(self,  request, pk,  *args,  **kwargs):
         post = get_object_or_404(Post, pk=pk)
         form = CommentModelForm(request.POST)
@@ -94,7 +80,7 @@ class PostDetailView(LoginRequiredMixin, View):
             "form": form,
             "comments": comments,
         }
-        return render(request,  "comment_form.html",  context)
+        return render(request,  "partials/comment_form.html",  context)
     
     
 class CreatePostView(LoginRequiredMixin, View):
@@ -141,6 +127,35 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         post = self.get_object()
         return self.request.user == post.author
     
+class CommentView(LoginRequiredMixin, View):
+    def get(self,  request,  pk ,  *args, **kwargs):
+        post = get_object_or_404(Post, pk=pk)
+        comments = Comment.objects.filter(post=post)
+        template_name = "partials/comment_data.html"
+        
+        context = {
+            "comments": comments,
+            "post": post
+        }
+        
+        return render(request,  template_name,  context)
+    
+class CommentCountView(LoginRequiredMixin, View):
+    def get(self,  request,  pk ,  *args, **kwargs):
+        post = get_object_or_404(Post, pk=pk)
+        comments = Comment.objects.filter(post=post)
+        template_name = "partials/comment_count.html"
+        
+        num_of_comments = len(comments)
+        
+        context = {
+            "comments": comments,
+            "post": post,
+            "num_of_comments": num_of_comments
+        }
+        
+        return render(request,  template_name,  context)
+    
     
 class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
@@ -172,7 +187,7 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class LikePostView(LoginRequiredMixin,  View):
     def get(self,  request, pk , *args, **kwargs):
-        template_name = "like_form.html"
+        template_name = "partials/like_form.html"
         post = Post.objects.get(pk=pk)
         context = {
             "post": post

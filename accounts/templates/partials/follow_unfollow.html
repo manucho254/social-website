@@ -1,0 +1,19 @@
+<div hx-swap="beforebegin">
+{% if user == request.user %}
+{% else %}
+     <form hx-post="
+          {% if is_following %}
+             {% url 'remove-follower' profile.pk %}
+          {% else %}
+             {% url 'add-follower' profile.pk %}
+          {% endif %}" hx-swap="beforebegin">
+        {% csrf_token %}
+      {% if is_following %}
+        <button class="btn btn-danger">unfollow</button>
+      {% else %}
+         <button class="btn btn-info">follow</button>
+       {% endif %}
+    </form>
+  
+{% endif %}
+</div>

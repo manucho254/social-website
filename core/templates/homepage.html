@@ -8,7 +8,7 @@
     <div class="row justify-content-center infinite-container">
       <div class="col-md-7 col-sm-12 infinite-item">
         {% for post in page_obj %}
-          {% include "post_data.html" %}
+          {% include "partials/post_data.html" %}
         {% comment %} {% if page_obj.has_next %}
           <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
         {% endif %}
