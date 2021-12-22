@@ -50,13 +50,26 @@ class EditProfileView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         profile = self.get_object()
         return self.request.user == profile.user
     
-# addding a follower
+# adding a follower
+
 class AddFollowerView(LoginRequiredMixin,  View):
+    def get(self, request, pk ,  *args,  **kwargs):
+        profile = Profile.objects.get(pk=pk)
+        profile.followers.add(request.user)
+        template_name = "partials/follow_unfollow.html"
+        
+        context = {
+           "profiles": profile
+        }
+
+        return render(request, template_name,  context)
+        
     def post(self, request, pk,  *args, **kwargs):
         profile = Profile.objects.get(pk=pk)
         profile.followers.add(request.user)
         
         return redirect("profile",  pk=profile.pk)
+       
     
 class RemoveFollowerView(LoginRequiredMixin,  View):
     def post(self, request, pk,  *args, **kwargs):
