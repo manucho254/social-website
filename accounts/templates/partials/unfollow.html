@@ -1,0 +1,6 @@
+{% if is_following %}
+    <form hx-post="{% url 'remove-follower' profile.pk %}" hx-swap="outerHTML">
+        {% csrf_token %}
+        <button class="btn btn-danger">unfollow</button>
+    </form>
+{% endif %}

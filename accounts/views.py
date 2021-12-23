@@ -77,7 +77,7 @@ class RemoveFollowerView(LoginRequiredMixin,  View):
         
         profile = Profile.objects.get(pk=pk)
         
-        template_name = "partials/follow_unfollow.html"
+        template_name = "partials/follow.html"
         
         context = {
            "profile": profile
