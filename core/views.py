@@ -213,17 +213,15 @@ class LikePostView(LoginRequiredMixin,  View):
         
         return redirect("like-post",  pk=pk)
     
-    
+#search view   
 class SearchView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('query')
         
-        post_list = Post.objects.filter(Q(caption__icontains=query))
-        profiles = Profile.objects.filter(Q(first_name__icontains=query))
+        post_list = Post.objects.filter(Q(caption__icontains=query) | Q(author__username__icontains=query))
         
         context = {
-            "search_results": post_list,
-            "search_results": profiles
+           "search_results": post_list,
         }
         
         return render(request, "search.html",  context)
