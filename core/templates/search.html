@@ -1,0 +1,25 @@
+{%  extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="p-4">
+    <div class="container">
+      <div class="row justify-content-center infinite-container">
+        <div class="col-md-7 col-sm-12 infinite-item">
+            {% for post in search_results %}
+                {% include "partials/post_data.html" %}
+            {% empty %}
+              <div class="row justify-content-center mt-3">
+                <p class="text-center h4">Sorry no matching results for your search 
+                    <span class="text-secondary h5">{{ request.GET.query }}</span>
+                </p>
+                <img src="{% static 'images/no_image.jpg' %}" alt="..." class="img-fluid">
+              </div>
+            {% endfor %}
+            
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
