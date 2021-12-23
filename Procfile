@@ -1,1 +1,1 @@
-web: 
+web: gunicorn manuchosocial.wsgi --log-file -
