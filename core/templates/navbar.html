@@ -9,18 +9,20 @@
       </span>
     </a>
 
-    <button id="toggler" class="navbar-toggler"  data-bs-toggle="collapse" data-bs-target="#navbarScroll" >
-      <i id="toggle-icon" class="fa fa-bars" aria-hidden="true"></i>
+    {% comment %} <button id="toggler" class="navbar-toggler"  data-bs-toggle="collapse" data-bs-target="#navbarScroll" >
+      <i id="toggle-icon" class="fa fa-bars" aria-hidden="false"></i>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarScroll">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarScroll"> {% endcomment %}
    
-      <ul class="navbar-nav mr-auto  my-2">
+      <ul class="navbar-nav mr-auto my-2">
        <div class="d-flex d-inline ">
-
+            
+            <!--search form-->
             <form class="d-flex me-3 px-2" method="GET" action="{% url 'search' %}">
               <input class="searchinput-box form-control rounded-pill my-2" 
                   type="text" name="query" value="{{ request.GET.query }}" placeholder="Search">
             </form>
+
               <li class="nav-item px-2">
                 <a class="nav-link" aria-current="page" href="{% url 'home' %}"><span class="h5 text-dark">
                   <i class="fa fa-home" aria-hidden="true"></i></span>
@@ -41,21 +43,23 @@
                     </ul>
               </li>
               <li class="nav-item ">
-                <a class="nav-link"><i class="fas fa-bell h4 text-secondary"></i></a>
+                  <a class="nav-link"><i class="fas fa-bell h4 text-secondary"></i></a>
               </li>
               <li class="nav-item dropdown">
                   <button type="button" class="btn shadow-none" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="far fa-user h4 text-dark"></i>
                   </button>
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-                      <li><a class="dropdown-item text-light" href="{% url 'account_logout' %}">logout</a></li>
-                      <li><a class="dropdown-item text-light shadow-none" href="{% url 'profile' user.profile.pk %}">
-                        profile
-                      </a></li>
-                      </ul>
+                      <li>
+                        <a class="dropdown-item text-light" href="{% url 'account_logout' %}">logout</a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item text-light shadow-none" href="{% url 'profile' user.profile.pk %}">profile</a>
+                      </li>
+                    </ul>
               </li>
         </div>
       </ul>
-    </div>
+   
   </div>
 </nav>

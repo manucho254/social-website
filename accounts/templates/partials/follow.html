@@ -1,0 +1,23 @@
+{% if profile.user == request.user %}
+
+{% else %}
+      
+      {% if is_following %}
+      <form hx-post="{% url 'remove-follower' profile.pk %}" hx-swap="outerHTML">
+      {% endif %}
+      {% if not is_following %}
+      <form hx-post="{% url 'add-follower' profile.pk %}" hx-swap="outerHTML">
+      {% endif %}
+     
+         {% csrf_token %}
+         {% if is_following %}
+            <button class="btn btn-danger">unfollow</button>
+         {% endif %}
+         {% if not is_following %}
+            <button class="btn btn-info">follow</button>
+         {% endif %}
+      </form>
+
+{% endif %}
+
+
