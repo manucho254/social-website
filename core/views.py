@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from accounts.models import Profile
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from .models import Post,Comment
@@ -211,3 +212,16 @@ class LikePostView(LoginRequiredMixin,  View):
             post.likes.remove(request.user)
         
         return redirect("like-post",  pk=pk)
+    
+    
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('query')
+        post_list = Post.objects.filter\
+            (Q(caption__icontains=query),Q(author__icontains=query))
+        context = {
+            "post_list": post_list
+        }
+        return render(request, "search.html",  context)
+    
+    
