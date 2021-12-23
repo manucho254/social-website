@@ -219,9 +219,11 @@ class SearchView(View):
         query = self.request.GET.get('query')
         
         post_list = Post.objects.filter(Q(caption__icontains=query) | Q(author__username__icontains=query))
+        profiles = Profile.objects.filter(Q(user__username__icontains=query))
         
         context = {
            "search_results": post_list,
+           "profiles": profiles
         }
         
         return render(request, "search.html",  context)

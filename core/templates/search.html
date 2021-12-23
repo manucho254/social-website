@@ -17,8 +17,14 @@
                 <img src="{% static 'images/no_image.jpg' %}" alt="..." class="img-fluid">
               </div>
             {% endfor %}
-            
         </div>
+        {% for profile in profiles %}
+        <div class="col-md-3 col-sm-12 infinite-item g-2">
+          <div class="card mb-2 p-3">
+              <h5>{{ profile.user }}</h5>
+          </div>
+        </div>
+      {% endfor %}
       </div>
     </div>
 
