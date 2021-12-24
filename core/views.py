@@ -17,7 +17,8 @@ class LandingPage(View):
 
 class HomeView(LoginRequiredMixin ,View):
     def get(self,  request,  *args,  **kwargs):
-        posts = Post.objects.all()
+        logged_in_user = request.user
+        posts = Post.objects.filter(author__profile__followers__in=[logged_in_user.id])
         paginator = Paginator(posts, 5) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
