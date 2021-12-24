@@ -80,7 +80,7 @@
          {% include "partials/post_data.html" %}
      </div>
      {% empty %}
-      <p class="p-3">No posts yet from {{ profile.user }}</p>
+      <p class="p-3">No posts yet from <span class="h3">{{ profile.user }}</span></p>
      {% endfor%}
    </div>
 </div>
