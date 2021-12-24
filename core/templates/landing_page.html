@@ -54,7 +54,7 @@
 {% else %}
     <script>
       (() => {
-        window.location.href = "{% url 'home'%}"; // automatic redirect to homepage for logged in users
+        window.location.href = "{% url 'home' %}"; // automatic redirect to homepage for logged in users
       })();
     </script>
 {% endif %}
