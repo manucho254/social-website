@@ -20,6 +20,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length = 20, choices = GENDER_CHOICES, default ='No Gender')
     profile_image = models.ImageField(upload_to="profile_images/",  default="profile_images/default.jpg", blank=True)
     followers = models.ManyToManyField(User, blank=True, related_name="followers")
+    following = models.ManyToManyField(User, blank=True, related_name="following")
     profile_created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

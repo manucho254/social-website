@@ -10,53 +10,53 @@
 
     </head>
 {% if request.user.is_anonymous %}
-<body class="landing-backgound">
+  <body class="landing-backgound">
 
-     <nav class="navbar navbar-expand-lg landing-backgound border-3 shadow-sm p-4">
-      <div class="container-fluid">
-   
-        <a class="navbar-brand"  {% if user.is_authenticated %}
-          href="{% url 'home' %}" {% else %}  href="{% url 'landing' %}" {% endif%}>
-          <span class="h2">
-            <strong class="text-info">Manucho<span class="text-dark">social</span>
-            </strong></span>
-        </a>
-        
-            <div class="navbar-nav">
-              <input class="nav-link active" aria-current="page" href="#" type="toggle">
-            </div>
-        </div>
-      </nav>
-        <section>
-          <div class="container mt-5 ">
-           <div class="row justify-content-center">
-            <div class="col-md-10 col-sm-12 text-center">
-              <h1 class="display-2 text-secondary">Connect with people all over the world !!</h1>
-              <p class="mt-3 lead justify-content-center">
-                Follow people you deam intresting , stay up to date with there daily lives.
-              </p>
-              <div class="d-flex justify-content-center mt-4">
-                <a class=" btn btn-dark px-5 rounded-pill" href="{% url 'account_login' %}">Sign In</a>
-                <span class="m-2"></span>
-                <a class="btn btn-dark px-5 rounded-pill" href="{% url 'account_signup' %}">Sign Up</a>
+      <nav class="navbar navbar-expand-lg landing-backgound border-3 shadow-sm p-4">
+        <div class="container-fluid">
+    
+          <a class="navbar-brand"  {% if user.is_authenticated %}
+            href="{% url 'home' %}" {% else %}  href="{% url 'landing' %}" {% endif%}>
+            <span class="h2">
+              <strong class="text-info">Manucho<span class="text-dark">social</span>
+              </strong></span>
+          </a>
+          
+              <div class="navbar-nav">
+                <input class="nav-link active" aria-current="page" href="#" type="toggle">
+              </div>
+          </div>
+        </nav>
+          <section>
+            <div class="container mt-5 ">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-sm-12 text-center">
+                <h1 class="display-2 text-secondary">Connect with people all over the world !!</h1>
+                <p class="mt-3 lead justify-content-center">
+                  Follow people you deam intresting , stay up to date with there daily lives.
+                </p>
+                <div class="d-flex justify-content-center mt-4">
+                  <a class=" btn btn-dark px-5 rounded-pill" href="{% url 'account_login' %}">Sign In</a>
+                  <span class="m-2"></span>
+                  <a class="btn btn-dark px-5 rounded-pill" href="{% url 'account_signup' %}">Sign Up</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <footer class="mt-5 fixed-bottom p-5 bg-light text-center">
-         <p class="mt-3 lead ">Copyright @ 2021</p>
-      <footer>
+        <footer class="mt-5 fixed-bottom p-5 bg-light text-center">
+          <p class="mt-3 lead ">Copyright @ 2021</p>
+        <footer>
 
-      {% include "allscripts.html" %}
-  </body>
+        {% include "allscripts.html" %}
+    </body>
 {% else %}
-  <script>
-    (() => {
-      window.location.href = "{% url 'home'%}";
-    })();
-  </script>
+    <script>
+      (() => {
+        window.location.href = "{% url 'home'%}"; // automatic redirect to homepage for logged in users
+      })();
+    </script>
 {% endif %}
 </html>
         
