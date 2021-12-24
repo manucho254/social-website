@@ -4,17 +4,17 @@
 
 <section class="p-4 pt-0 font-monospace mt-4">
     <div class="row justify-content-center">
-      <div class="col-md-8 col-sm-12">
-        <h3 class="text-dark card-header border-0 mb-2">
-            <i class="fa fa-users text-info" aria-hidden="true"></i>
-            Followers 
-        </h3>
+      <div class="col-md-10 col-sm-12">
         <div class="d-flex justify-content-end mb-2">
-            <a href="{% url 'profile' profile.pk %}" class="btn card-header h4 shadow-none border-0">
+            <a href="{% url 'profile' profile.pk %}" class="btn card-header h5 shadow-none border-0">
               <i class="fa fa-arrow-left"></i><span class="h5"> Back to Profile</span>
             </a>
          </div>
-        <div class="col-md-7 col-sm-12 infinite-item g-2 px-3">
+        <div class="col-md-6 col-sm-12 infinite-item g-2 px-3">
+            <h3 class="text-dark card-header border-0 mb-4">
+                <i class="fa fa-users text-info" aria-hidden="true"></i>
+                Followers 
+            </h3>
                {% for follower in followers %}
                  <div class="card mb-2 p-2 d-flex bg-light">
                     <a href="{% url 'profile' follower.profile.pk %}" class="text-decoration-none text-secondary">

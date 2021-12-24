@@ -184,8 +184,19 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         comment = self.get_object()
         return self.request.user == comment.author
     
+class CommentLikeView(LoginRequiredMixin, View):
+    def get(self,  request,  pk,  *args,  **kwargs):
+        pass
+    def post(self,  request,  pk,  *args,  **kwargs):
+        pass
+    
+class CommentReplyView(LoginRequiredMixin, View):
+    def get(self,  request,  pk,  *args,  **kwargs):
+        pass
+    def post(self,  request,  pk,  *args,  **kwargs):
+        pass
+        
 #follow and unfollow views
-
 
 class LikePostView(LoginRequiredMixin,  View):
     def get(self,  request, pk , *args, **kwargs):
