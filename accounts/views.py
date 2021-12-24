@@ -38,7 +38,7 @@ class ProfileView(LoginRequiredMixin, View):
     
 class EditProfileView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Profile
-    fields = ["username","first_name","last_name","bio","birthday","location","gender","profile_image"]
+    fields = ["first_name","last_name","bio","birthday","location","gender","profile_image"]
     
     template_name = "profiles/profile_edit.html"
     
@@ -57,7 +57,7 @@ class AddFollowerView(LoginRequiredMixin,  View):
         
         profile = Profile.objects.get(pk=pk)
         
-        template_name = "partials/follow.html"
+        template_name = "partials/follow_unfollow.html"
         
         context = {
            "profile": profile
@@ -69,7 +69,7 @@ class AddFollowerView(LoginRequiredMixin,  View):
         profile = Profile.objects.get(pk=pk)
         profile.followers.add(request.user)
         
-        return redirect("add-follower",  pk=profile.pk)
+        return redirect("profile",  pk=profile.pk)
        
     
 class RemoveFollowerView(LoginRequiredMixin,  View):
@@ -77,7 +77,7 @@ class RemoveFollowerView(LoginRequiredMixin,  View):
         
         profile = Profile.objects.get(pk=pk)
         
-        template_name = "partials/follow.html"
+        template_name = "partials/follow_unfollow.html"
         
         context = {
            "profile": profile
@@ -89,4 +89,4 @@ class RemoveFollowerView(LoginRequiredMixin,  View):
         profile = Profile.objects.get(pk=pk)
         profile.followers.remove(request.user)
         
-        return redirect("remove-follower",  pk=profile.pk)
+        return redirect("profile",  pk=profile.pk)
