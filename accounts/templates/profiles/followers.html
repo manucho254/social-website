@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<section class="p-4 pt-0 font-monospace mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-sm-12">
+        <h3 class="text-info card-header border-0">Followers</h3>
+         <div class="d-flex justify-content-end mb-4 mt-2">
+           <a href="{% url 'profile' profile.pk %}" class="btn card-header h4 shadow-none border-0">
+                <i class="fa fa-arrow-left"></i>
+                <span class="h5"> Back to Profile</span>
+           </a>
+        </div>
+        <div class="col-md-7 col-sm-12 infinite-item g-2 px-3">
+               {% for follower in followers %}
+                 <div class="card mb-2 p-2 d-flex">
+                    <a href="{% url 'profile' follower.profile.pk %}" class="text-decoration-none text-secondary">
+                        <img class="img img-fluid mt-2 mb-2 me-1" src="{{ follower.profile.profile_image.url }}" alt="user-image">
+                        <span class="h5 my-4 px-1">{{ follower.profile.user }}</span>
+                        <span class="my-4 text-dark">followers: {{ follower.profile.followers.all.count }}</span>
+                    </a>
+                  </div>
+               {% endfor %}
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock content %}

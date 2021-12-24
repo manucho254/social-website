@@ -7,6 +7,7 @@
     <div class="container">
       <div class="row justify-content-center infinite-container">
         <div class="col-md-7 col-sm-12 infinite-item">
+          <p class="lead h3">Posts</p>
             {% for post in search_results %}
                 {% include "partials/post_data.html" %}
             {% empty %}
@@ -17,13 +18,25 @@
                 <img src="{% static 'images/no_image.jpg' %}" alt="..." class="img-fluid">
               </div>
             {% endfor %}
-            {% for profile in profiles %}
-            <div class="col-md-3 col-sm-12 infinite-item g-2">
-              <div class="card mb-2 p-3">
-                <h5>{{ profile.user }}</h5>
-             </div>
-           </div>
-         {% endfor %}
+        </div>
+        <div class="col-md-3 col-sm-12 infinite-item g-2 px-3">
+          <p class="lead h3">Profiles</p>
+             {% for profile in profiles %}
+              <div class="card mb-2 p-2 d-flex">
+                <a href="{% url 'profile' profile.pk %}" class="text-decoration-none text-secondary">
+                  <img class="img img-fluid mt-2 mb-2 me-1" src="{{ profile.profile_image.url }}" alt="user-image">
+                      <span class="h5 my-4 px-1">{{ profile.user }}</span>
+                      <span class="my-4 text-dark">followers: {{ profile.followers.all.count }}</span>
+                  </a>
+              </div>
+            {% empty %}
+              <div class="row justify-content-center mt-3">
+                <p class="text-center h4">Sorry no matching results for your search 
+                    <span class="text-secondary h5">{{ request.GET.query }}</span>
+                </p>
+                <img src="{% static 'images/no_image.jpg' %}" alt="..." class="img-fluid">
+              </div>
+            {% endfor %}
         </div>
       </div>
     </div>
