@@ -13,6 +13,17 @@ class ProfileView(LoginRequiredMixin, View):
         posts = Post.objects.filter(author=user).order_by('-created_on')
         
         followers = profile.followers.all()
+        following =  profile.following.all()
+        
+        if len( following ) == 0:
+            followed = False
+            
+        for follower in following:
+            if follower == profile.user:
+                followed = True
+                break
+        else:
+            followed = False
         
         if len(followers) == 0:
             is_following = False
@@ -23,7 +34,9 @@ class ProfileView(LoginRequiredMixin, View):
                 break
             else:
                 is_following = False
+                
         number_of_followers = len(followers)
+        num_following = len(following)
         
         context = {
             'profile': profile,
@@ -31,6 +44,8 @@ class ProfileView(LoginRequiredMixin, View):
             'posts' : posts,
             'number_of_followers' :  number_of_followers,
             'is_following': is_following,
+            "num_following" :  num_following,
+            "followed":  followed
             
         }
         
@@ -68,6 +83,7 @@ class AddFollowerView(LoginRequiredMixin,  View):
     def post(self, request, pk,  *args, **kwargs):
         profile = Profile.objects.get(pk=pk)
         profile.followers.add(request.user)
+        profile.following.add(profile.user)
         
         return redirect("profile",  pk=profile.pk)
        
@@ -88,6 +104,7 @@ class RemoveFollowerView(LoginRequiredMixin,  View):
     def post(self, request, pk,  *args, **kwargs):
         profile = Profile.objects.get(pk=pk)
         profile.followers.remove(request.user)
+        profile.following.remove(profile.user)
         
         return redirect("profile",  pk=profile.pk)
     

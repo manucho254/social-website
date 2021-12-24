@@ -4,12 +4,12 @@
    {% if is_following %}
     <form method="post"  action="{% url 'remove-follower' profile.pk %}">
         {% csrf_token %}
-        <button class="btn btn-danger" type="submit">unfollow</button>
+        <button class="btn btn-danger rounded-pill mb-2" type="submit">unfollow</button>
     </form>
    {% else %}
       <form   method="post"  action="{% url 'add-follower' profile.pk %}">
          {% csrf_token %}
-            <button class="btn btn-info" type="submit">follow</button>
+            <button class="btn btn-info rounded-pill mb-2" type="submit">follow</button>
       </form>
    {% endif %}
    
