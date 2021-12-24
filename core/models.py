@@ -61,6 +61,7 @@ class Comment(models.Model):
     message = models.CharField(max_length=300)
     commented_on = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    liked = models.ManyToManyField(User, blank=True,  related_name="comment_likes")
     
     def __str__(self):
         return self.message
