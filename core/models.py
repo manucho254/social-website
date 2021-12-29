@@ -64,8 +64,15 @@ class Comment(models.Model):
     liked = models.ManyToManyField(User, blank=True,  related_name="comment_likes")
     parent = models.ForeignKey('self',  on_delete=models.CASCADE,  blank=True, null=True,  related_name="+")
     
+    @property
     def children(self):
         return Comment.objects.filter(parent=self).order_by("commented_on").all()
+    
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True
+        return False
     
     def __str__(self):
         return self.message

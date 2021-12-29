@@ -1,3 +1,5 @@
+{% load crispy_forms_tags  %}
+
 <div class="mt-0 mb-2">
   <div class="comments text-secondary font-monospace">
 
@@ -16,8 +18,15 @@
                   <i class="fas fa-edit text-info"></i>
               </a>
             {% endif %}
-            <button class="btn shadow-none border-none text-secondary">Reply</button>
           </span>
+          <button id="commentReply" class="btn shadow-none border-none text-secondary" onclick='toggleReplyButton("{{ comment.pk }}"")'>Reply</button>
+          <div id="comment-reply-form" class="d-none">
+            <form  method="post">
+              {% csrf_token %}
+                {{ form|crispy }}
+              <button type="submit" class="btn btn-success mt-4 rounded-pill px-5">Create</button>
+            </form>
+          </div>
         {% endif %}
     {% empty %}
         <div class="px-5"><h4>No comments</h4> be the first to comment..</div>

@@ -101,6 +101,14 @@ body {
     color: red;
 }
 
+.hide-reply-form {
+    visibility: hidden;
+}
+
+.show-reply-form {
+    visibility: visible;
+}
+
 @media (max-width: 412px) {
     .comment-input {
         width: 230px;

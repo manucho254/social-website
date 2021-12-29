@@ -1,6 +1,8 @@
 <form hx-post="{% url 'like-comment' comment.pk %}"  hx-swap="outerHTML">
     {% csrf_token %}
-    <input type="hidden" name="next" value='{{ request.path }}'>
-    {% include "partials/like_button.html" %}
+     <input type="hidden" name="next" value='{{ request.path }}'>
+        <button id="like" type="submit" class="btn shadow-none notLiked">
+            <i class="fa fa-thumbs-up text-secondary"></i>
+        </button>
     <span>{{ comment.liked.all.count }} likes</span>
 </form>
