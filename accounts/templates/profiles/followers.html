@@ -17,7 +17,7 @@
             </h3>
                {% for follower in followers %}
                  <div class="card mb-2 p-2 d-flex bg-light">
-                    <a href="{% url 'profile' follower.profile.pk %}" class="text-decoration-none text-secondary">
+                    <a href="{% url 'profile' follower.profile.profile_slug %}" class="text-decoration-none text-secondary">
                         <img class="img img-fluid mt-2 mb-2 me-1" src="{{ follower.profile.profile_image.url }}" alt="user-image">
                         <span class="h5 my-4 px-1">{{ follower.profile.user }}</span>
                         <span class="my-4 text-dark">followers: {{ follower.profile.followers.all.count }}</span>

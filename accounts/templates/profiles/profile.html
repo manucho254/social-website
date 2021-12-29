@@ -51,7 +51,7 @@
 
           <div class="d-flex mt-2">
             <p class="mb-1 text-dark">
-              <a  class="text-decoration-none" href="{% url 'followers'  profile.pk %}">
+              <a  class="text-decoration-none" href="{% url 'followers'  profile.profile_slug %}">
                 <span class="text-secondary h5">followers</span>
               </a>
               <p class=px-3>({{ number_of_followers }})</p>

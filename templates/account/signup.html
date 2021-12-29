@@ -1,10 +1,10 @@
 {% load crispy_forms_tags %} {% load i18n %} {% include "allcss.html" %} 
 
 {% block content %}
-<section class="p-3">
+<section class="p-3 mt-4 font-monospace">
   <div class="row justify-content-center mt-5">
-    <div class="col-lg-6 col-sm-12">
-      <div class="card my-card bg-light">
+    <div class="col-lg-5 col-sm-12">
+      <div class="card my-card bg-light w-100">
         <h1 class="card-header border-0 d-flex justify-content-center">
           {% trans "Sign Up" %}
         </h1>
@@ -22,11 +22,11 @@
               value="{{ redirect_field_value }}"
             />
             {% endif %}
-            <button class="btn w-50 btn-dark my-3" type="submit">
+            <button class="btn w-25 btn-dark my-3" type="submit">
               {% trans "Sign Up" %} &raquo;
             </button>
           </form>
-          <p class="lead">
+          <p>
             {% blocktrans %}Already have an account? Then please
             <a href="{{ login_url }}" class="text-info">sign in</a>.{% endblocktrans %}
           </p>

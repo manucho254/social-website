@@ -116,6 +116,9 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         slug = self.kwargs['post_slug']
         return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
     
+    def get_object(self, queryset=None):
+        return Post.objects.get(post_slug=self.kwargs.get("post_slug"))
+    
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
@@ -144,7 +147,7 @@ class CommentView(LoginRequiredMixin, View):
     
 class CommentCountView(LoginRequiredMixin, View):
     def get(self,  request,  post_slug ,  *args, **kwargs):
-        post = get_object_or_404(Post, post_slug=post_slug)
+        post = Post.objects.get(post_slug=post_slug)
         comments = Comment.objects.filter(post=post)
         template_name = "partials/comment_count.html"
         
@@ -167,6 +170,9 @@ class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         slug = self.kwargs['post_slug']
         return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
+    
+    def get_object(self, queryset=None):
+        return Post.objects.get(pk=self.kwargs.get("pk"))
     
     def test_func(self):
         comment = self.get_object()
