@@ -7,10 +7,10 @@
             <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span>
             {% if request.user == comment.author  %}
             
-            <a class="btn shadow-none " href="{% url 'delete-comment' post.pk comment.pk %}">
+            <a class="btn shadow-none " href="{% url 'delete-comment' post.post_slug comment.pk %}">
                 <i class="fas fa-trash-alt text-danger"></i>
             </a>
-            <a class="btn shadow-none " href="{% url 'edit-comment' post.pk comment.pk %}">
+            <a class="btn shadow-none " href="{% url 'edit-comment' post.post_slug comment.pk %}">
                 <i class="fas fa-edit text-info"></i>
             </a>
             {% endif %}

@@ -31,8 +31,8 @@ class HomeView(LoginRequiredMixin ,View):
         }
         return render(request,  "homepage.html",  context)
     
-    def post(self,  request, pk,  *args,  **kwargs):
-        post = get_object_or_404(Post, pk=pk)
+    def post(self,  request, post_slug,  *args,  **kwargs):
+        post = get_object_or_404(Post, post_slug=post_slug)
         form = CommentModelForm(request.POST)
         comments = Comment.objects.filter(post=post)
         
@@ -50,8 +50,8 @@ class HomeView(LoginRequiredMixin ,View):
         return render(request,  "partials/comment_form.html",  context)
     
 class PostDetailView(LoginRequiredMixin, View):
-    def get(self, request, pk,  *args,  **kwargs):
-        post =  get_object_or_404(Post, pk=pk)
+    def get(self, request, post_slug,  *args,  **kwargs):
+        post =  get_object_or_404(Post, post_slug=post_slug)
         form = CommentModelForm()
         comments = Comment.objects.filter(post=post)
         
@@ -66,8 +66,8 @@ class PostDetailView(LoginRequiredMixin, View):
         
         return render(request,  "post_detail.html",  context)
      
-    def post(self,  request, pk,  *args,  **kwargs):
-        post = get_object_or_404(Post, pk=pk)
+    def post(self,  request, post_slug,  *args,  **kwargs):
+        post = get_object_or_404(Post, post_slug=post_slug)
         form = CommentModelForm(request.POST)
         comments = Comment.objects.filter(post=post)
         
@@ -113,8 +113,8 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'post_update.html'
     
     def get_success_url(self):
-        pk = self.kwargs['pk']
-        return reverse_lazy('post-detail',  kwargs={'pk': pk})
+        slug = self.kwargs['post_slug']
+        return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
     
     def test_func(self):
         post = self.get_object()
@@ -130,8 +130,8 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == post.author
     
 class CommentView(LoginRequiredMixin, View):
-    def get(self,  request,  pk ,  *args, **kwargs):
-        post = get_object_or_404(Post, pk=pk)
+    def get(self,  request,  post_slug ,  *args, **kwargs):
+        post = get_object_or_404(Post, post_slug=post_slug)
         comments = Comment.objects.filter(post=post)
         template_name = "partials/comment_data.html"
         
@@ -143,8 +143,8 @@ class CommentView(LoginRequiredMixin, View):
         return render(request,  template_name,  context)
     
 class CommentCountView(LoginRequiredMixin, View):
-    def get(self,  request,  pk ,  *args, **kwargs):
-        post = get_object_or_404(Post, pk=pk)
+    def get(self,  request,  post_slug ,  *args, **kwargs):
+        post = get_object_or_404(Post, post_slug=post_slug)
         comments = Comment.objects.filter(post=post)
         template_name = "partials/comment_count.html"
         
@@ -165,8 +165,8 @@ class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'comment_edit.html'
     
     def get_success_url(self):
-        pk = self.kwargs['post_pk']
-        return reverse_lazy('post-detail',  kwargs={'pk': pk})
+        slug = self.kwargs['post_slug']
+        return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
     
     def test_func(self):
         comment = self.get_object()
@@ -177,8 +177,8 @@ class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = "comment_delete.html"
     
     def get_success_url(self):
-        pk = self.kwargs['post_pk']
-        return reverse_lazy('post-detail',  kwargs={'pk': pk})
+        slug = self.kwargs['post_slug']
+        return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
     
     def test_func(self):
         comment = self.get_object()
@@ -199,16 +199,16 @@ class CommentReplyView(LoginRequiredMixin, View):
 #follow and unfollow views
 
 class LikePostView(LoginRequiredMixin,  View):
-    def get(self,  request, pk , *args, **kwargs):
+    def get(self,  request, post_slug , *args, **kwargs):
         template_name = "partials/like_form.html"
-        post = Post.objects.get(pk=pk)
+        post = Post.objects.get(post_slug=post_slug)
         context = {
             "post": post
         }
         return render(request, template_name, context)
     
-    def post(self, request, pk,  *args, **kwargs):
-        post = Post.objects.get(pk=pk)
+    def post(self, request, post_slug,  *args, **kwargs):
+        post = Post.objects.get(post_slug=post_slug)
         
         is_like = False
         
@@ -223,7 +223,7 @@ class LikePostView(LoginRequiredMixin,  View):
         if is_like:
             post.likes.remove(request.user)
         
-        return redirect("like-post",  pk=pk)
+        return redirect("like-post",  post_slug=post_slug)
     
 #search view   
 class SearchView(View):

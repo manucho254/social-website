@@ -51,15 +51,15 @@ class ProfileView(LoginRequiredMixin, View):
         
         return render(request,  "profiles/profile.html",  context)
     
-class EditProfileView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+class EditProfileView(LoginRequiredMixin, UserPassesTestMixin ,UpdateView):
     model = Profile
     fields = ["first_name","last_name","bio","birthday","location","gender","profile_image"]
     
     template_name = "profiles/profile_edit.html"
     
     def get_success_url(self):
-        profile_slug = self.kwargs["profile_slug"]
-        return reverse_lazy('profile', kwargs={"profile_slug": profile_slug})
+        slug = self.kwargs["profile_slug"]
+        return reverse_lazy('profile', kwargs={"profile_slug": slug})
     
     def test_func(self):
         profile = self.get_object()
@@ -68,9 +68,9 @@ class EditProfileView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
 # adding a follower
 
 class AddFollowerView(LoginRequiredMixin,  View):
-    def get(self, request, pk ,  *args,  **kwargs):
+    def get(self, request, profile_slug ,  *args,  **kwargs):
         
-        profile = Profile.objects.get(pk=pk)
+        profile = Profile.objects.get(profile_slug=profile_slug)
         
         template_name = "partials/follow_unfollow.html"
         
@@ -80,18 +80,18 @@ class AddFollowerView(LoginRequiredMixin,  View):
 
         return render(request, template_name,  context)
         
-    def post(self, request, pk,  *args, **kwargs):
-        profile = Profile.objects.get(pk=pk)
+    def post(self, request, profile_slug,  *args, **kwargs):
+        profile = Profile.objects.get(profile_slug=profile_slug)
         profile.followers.add(request.user)
         profile.following.add(profile.user)
         
-        return redirect("profile",  pk=profile.pk)
+        return redirect("profile",  profile_slug=profile_slug)
        
     
 class RemoveFollowerView(LoginRequiredMixin,  View):
-    def get(self, request, pk ,  *args,  **kwargs):
+    def get(self, request, profile_slug ,  *args,  **kwargs):
         
-        profile = Profile.objects.get(pk=pk)
+        profile = Profile.objects.get(profile_slug=profile_slug)
         
         template_name = "partials/follow_unfollow.html"
         
@@ -101,16 +101,16 @@ class RemoveFollowerView(LoginRequiredMixin,  View):
 
         return render(request, template_name,  context)
         
-    def post(self, request, pk,  *args, **kwargs):
-        profile = Profile.objects.get(pk=pk)
+    def post(self, request, profile_slug,  *args, **kwargs):
+        profile = Profile.objects.get(profile_slug=profile_slug)
         profile.followers.remove(request.user)
         profile.following.remove(profile.user)
         
-        return redirect("profile",  pk=profile.pk)
+        return redirect("profile",  profile_slug=profile_slug)
     
 class ListFollowersView(LoginRequiredMixin,  View):
-    def get(self,  request, pk , *args, **kwargs):
-        profile = Profile.objects.get(pk=pk)
+    def get(self,  request, profile_slug , *args, **kwargs):
+        profile = Profile.objects.get(profile_slug=profile_slug)
         followers = profile.followers.all()
         
         context = {

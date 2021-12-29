@@ -1,4 +1,4 @@
-<form hx-post="{% url 'like-post' post.pk %}"  hx-swap="outerHTML">
+<form hx-post="{% url 'like-post' post.post_slug %}"  hx-swap="outerHTML">
       {% csrf_token %}
       <input type="hidden" name="next" value='{{ request.path }}'>
       <button type="submit" class="btn shadow-none">

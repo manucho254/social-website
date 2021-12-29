@@ -1,7 +1,7 @@
 <div class="card my-card bg-light g-5 mb-3"> 
     <div class="card-title m-2">
     <div class="d-flex d-flex justify-content-between mb-1">
-        <a href="{% url 'profile' post.author.profile.pk %}" class="text-decoration-none text-secondary">
+        <a href="{% url 'profile' post.author.profile.profile_slug %}" class="text-decoration-none text-secondary">
         <img class="img img-fluid mt-3" src="{{ post.author.profile.profile_image.url }}" alt="user-image">
             <span class="h5 my-4 px-1">{{ post.author }}</span>
         </a>
@@ -39,6 +39,6 @@
     <span class="position-relative">
         <div class="mt-0 mb-2">
         </div>
-        <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>
+        <a href="{% url 'post-detail' post.post_slug %}" class="stretched-link"></a>
     </span>
 </div>
