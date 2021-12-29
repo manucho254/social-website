@@ -7,8 +7,8 @@ from django.views import View
 from django.views.generic import UpdateView,DeleteView
 
 class ProfileView(LoginRequiredMixin, View):
-    def get(self,  request, pk,*args,  **kwargs):
-        profile = Profile.objects.get(pk=pk)
+    def get(self,  request, profile_slug,*args,  **kwargs):
+        profile = Profile.objects.get(profile_slug=profile_slug)
         user = profile.user
         posts = Post.objects.filter(author=user).order_by('-created_on')
         
@@ -58,8 +58,8 @@ class EditProfileView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     template_name = "profiles/profile_edit.html"
     
     def get_success_url(self):
-        pk = self.kwargs["pk"]
-        return reverse_lazy('profile', kwargs={"pk": pk})
+        profile_slug = self.kwargs["profile_slug"]
+        return reverse_lazy('profile', kwargs={"profile_slug": profile_slug})
     
     def test_func(self):
         profile = self.get_object()

@@ -19,7 +19,7 @@
                    <img src="{{ profile.profile_image.url }}" alt="profile-image" class="rounded-circle mb-3"  width="150" height="150">
                 {% endif  %}
                 {% if request.user == user %}
-                 <a class="btn shadow-none" href="{% url 'edit-profile' profile.pk %}">
+                 <a class="btn shadow-none" href="{% url 'edit-profile' profile.profile_slug %}">
                     <i class="fas fa-edit text-info"></i>
                   </a>
                 {% endif %}

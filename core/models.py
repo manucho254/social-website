@@ -10,7 +10,7 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,  related_name="author")
     caption = models.CharField(max_length=200, blank=True, null=True)
     body = models.TextField()
-    post_slug = models.SlugField(max_length=30, blank=True, null=True)
+    post_slug = models.SlugField(max_length=200, blank=True, null=True)
     likes = models.ManyToManyField(User, blank=True,  related_name="likes")
     comments = models.ManyToManyField("Comment", blank=True,  related_name="comments")
     post_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
@@ -52,7 +52,7 @@ class Post(models.Model):
         return thumbnail
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.caption)
+        self.post_slug = slugify(self.caption)
         super(Post, self).save(*args, **kwargs)
   
 

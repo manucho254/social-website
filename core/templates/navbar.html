@@ -54,7 +54,7 @@
                         <a class="dropdown-item text-light" href="{% url 'account_logout' %}">logout</a>
                       </li>
                       <li>
-                        <a class="dropdown-item text-light shadow-none" href="{% url 'profile' request.user.profile.pk %}">profile</a>
+                        <a class="dropdown-item text-light shadow-none" href="{% url 'profile' request.user.profile.profile_slug %}">profile</a>
                       </li>
                     </ul>
               </li>
