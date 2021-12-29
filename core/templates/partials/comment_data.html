@@ -4,6 +4,7 @@
     {% for comment in comments %}
       {% if comment %}
         <p class="text-dark">{{ comment.author }}:  {{ comment }} 
+           {% include "partials/comment_like_form.html" %}
             <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span>
             {% if request.user == comment.author  %}
             

@@ -22,9 +22,9 @@
         <div class="col-md-4 col-sm-12 infinite-item g-2 px-3">
           <p class="lead h3">Profiles</p>
              {% for profile in profiles %}
-              <div class="card mb-2 p-2 d-flex bg-light">
-                <a href="{% url 'profile' profile.pk %}" class="text-decoration-none text-secondary">
-                  <img class="img img-fluid mt-2 mb-2 me-1" src="{{ profile.profile_image.url }}" alt="user-image">
+              <div class="card mb-2 p-2 d-flex bg-light rounded-pill">
+                <a href="{% url 'profile' profile.profile_slug %}" class="text-decoration-none text-secondary">
+                  <img class="img img-fluid mt-2 mb-2 me-1 ms-2" src="{{ profile.profile_image.url }}" alt="user-image">
                       <span class="h5 my-4 px-1">{{ profile.user }}</span>
                       <span class="my-4 text-dark">followers: {{ profile.followers.all.count }}</span>
                   </a>

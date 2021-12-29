@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from accounts.models import Profile
-from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
@@ -13,12 +12,13 @@ from django.views.generic import UpdateView,DeleteView
 
 class LandingPage(View):
     def get(self, request,  *args,  **kwargs):
-        return render(request,  "landing_page.html",  {})
+        template_name = "manuchosocial/landing_page.html"
+        return render(request, template_name,  {})
 
 class HomeView(LoginRequiredMixin ,View):
     def get(self,  request,  *args,  **kwargs):
         logged_in_user = request.user
-        posts = Post.objects.filter(author__profile__followers__in=[logged_in_user.id])
+        posts = Post.objects.filter(author__profile__followers__in=[logged_in_user.id]) 
         paginator = Paginator(posts, 5) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -29,7 +29,7 @@ class HomeView(LoginRequiredMixin ,View):
             "page_obj": page_obj,
             "form": form
         }
-        return render(request,  "homepage.html",  context)
+        return render(request,  "manuchosocial/homepage.html",  context)
     
     def post(self,  request, post_slug,  *args,  **kwargs):
         post = get_object_or_404(Post, post_slug=post_slug)
@@ -64,7 +64,7 @@ class PostDetailView(LoginRequiredMixin, View):
              "num_of_comments": num_of_comments,
         }
         
-        return render(request,  "post_detail.html",  context)
+        return render(request,  "manuchosocial/post_detail.html",  context)
      
     def post(self,  request, post_slug,  *args,  **kwargs):
         post = get_object_or_404(Post, post_slug=post_slug)
@@ -86,12 +86,12 @@ class PostDetailView(LoginRequiredMixin, View):
     
     
 class CreatePostView(LoginRequiredMixin, View):
-    def get(self,  request,  *args, **kwargs):
+    def get(self, request, *args , **kwargs):
         form = PostModelForm()
         context = {
             "form": form
         }
-        return render(request,  "post_create.html",  context)
+        return render(request,  "manuchosocial/post_create.html",  context)
     
     def post(self,  request,  *args,  **kwargs):
         form = PostModelForm(request.POST, request.FILES)
@@ -104,7 +104,7 @@ class CreatePostView(LoginRequiredMixin, View):
         context = {
             "form": form
         }
-        return render(request,  "post_create.html",  context)
+        return render(request,  "manuchosocial/post_create.html",  context)
     
 
 class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -116,6 +116,8 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         slug = self.kwargs['post_slug']
         return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
     
+    # overiding the get_object() method to get the desired object from database
+    
     def get_object(self, queryset=None):
         return Post.objects.get(post_slug=self.kwargs.get("post_slug"))
     
@@ -125,7 +127,7 @@ class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    template_name = "post_delete.html"
+    template_name = "manuchosocial/post_delete.html"
     success_url = reverse_lazy('home')
     
     def test_func(self):
@@ -165,14 +167,17 @@ class CommentCountView(LoginRequiredMixin, View):
 class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     fields = ['message']
-    template_name = 'comment_edit.html'
+    template_name = 'manuchosocial/comment_edit.html'
     
     def get_success_url(self):
         slug = self.kwargs['post_slug']
         return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
-    
+      
+    # overiding the get_object() method to get the desired object from database
     def get_object(self, queryset=None):
-        return Post.objects.get(pk=self.kwargs.get("pk"))
+        return \
+            Post.objects.get(post_slug=self.kwargs.get("post_slug")) \
+            and  Comment.objects.get(pk=self.kwargs.get("pk"))
     
     def test_func(self):
         comment = self.get_object()
@@ -180,21 +185,48 @@ class UpdateCommentView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class DeleteCommentView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Comment
-    template_name = "comment_delete.html"
+    template_name = "manuchosocial/comment_delete.html"
     
     def get_success_url(self):
         slug = self.kwargs['post_slug']
         return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
     
+    def get_object(self, queryset=None):
+        return \
+            Post.objects.get(post_slug=self.kwargs.get("post_slug")) \
+            and  Comment.objects.get(pk=self.kwargs.get("pk"))
+
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
-    
+  
+#like comment 
 class CommentLikeView(LoginRequiredMixin, View):
-    def get(self,  request,  pk,  *args,  **kwargs):
-        pass
-    def post(self,  request,  pk,  *args,  **kwargs):
-        pass
+    def get(self,  request, pk , *args, **kwargs):
+        template_name = "partials/comment_like_form.html"
+        comment = Comment.objects.get(pk=pk)
+        context = {
+            "comment": comment
+        }
+        return render(request, template_name, context)
+    
+    def post(self, request, pk,  *args, **kwargs):
+        comment = Comment.objects.get(pk=pk)
+        
+        is_like = False
+        
+        for like in comment.liked.all():
+            if like == request.user:
+                is_like = True
+                break
+        
+        if not is_like:
+            comment.liked.add(request.user)
+            
+        if is_like:
+            comment.liked.remove(request.user)
+        
+        return redirect("like-comment",  pk=pk)
     
 class CommentReplyView(LoginRequiredMixin, View):
     def get(self,  request,  pk,  *args,  **kwargs):
@@ -206,7 +238,7 @@ class CommentReplyView(LoginRequiredMixin, View):
 
 class LikePostView(LoginRequiredMixin,  View):
     def get(self,  request, post_slug , *args, **kwargs):
-        template_name = "partials/like_form.html"
+        template_name = "partials/post_like_form.html"
         post = Post.objects.get(post_slug=post_slug)
         context = {
             "post": post
@@ -235,15 +267,15 @@ class LikePostView(LoginRequiredMixin,  View):
 class SearchView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('query')
-        
         post_list = Post.objects.filter(Q(caption__icontains=query) | Q(author__username__icontains=query))
         profiles = Profile.objects.filter(Q(user__username__icontains=query))
+        template_name = "manuchosocial/search.html"
         
         context = {
            "search_results": post_list,
            "profiles": profiles
         }
         
-        return render(request, "search.html",  context)
+        return render(request, template_name ,  context)
     
     

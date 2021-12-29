@@ -6,8 +6,8 @@
   <div class="row justify-content-center">
     <div class="col-md-8 col-sm-12 ">
        <div class="d-flex justify-content-between mb-4 mt-2">
-         <h3 class="text-info card-header border-0">Delete Comment</h3>
-         <a href="{% url 'post-detail' object.post.pk  %}" class="btn card-header h4 shadow-none border-0">
+         <h3 class="text-info card-header border-0">Delete Post</h3>
+         <a href="{% url 'post-detail' object.post_slug  %}" class="btn card-header h4 shadow-none border-0">
            <i class="fa fa-arrow-left"></i><span class="h5"> Back to Post</span>
          </a>
        </div>
@@ -15,7 +15,7 @@
         <form method="post" enctype="multipart/form-data">
          {% csrf_token %}
             <h3 class="mt-2 mb-4 ">Are you sure ?</h3>
-            <p>You are about to delete your comment, this action is irreversable !!!</p>
+            <p>You are about to delete your Post, this action is irreversable !!!</p>
             <button type="submit" class="btn shadow-none btn-danger mt-4 rounded-pill px-5">Delete</button>
         </form>
      </div>
