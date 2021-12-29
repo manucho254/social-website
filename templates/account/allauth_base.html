@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+{% include "allcss.html" %}
+
 <html>
   <head>
     <title>{% block head_title %}{% endblock %}</title>
@@ -37,4 +40,8 @@
     {% block extra_body %}
     {% endblock %}
   </body>
+
+{% include "allscripts.html" %}
+
 </html>
+

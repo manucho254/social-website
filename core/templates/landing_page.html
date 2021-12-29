@@ -51,12 +51,12 @@
 
         {% include "allscripts.html" %}
     </body>
-{% else %}
-    <script>
-      (() => {
-        window.location.href = "{% url 'home' %}"; // automatic redirect to homepage for logged in users
-      })();
-    </script>
-{% endif %}
+  {% else %}
+      <script>
+        (() => {
+          window.location.href = "{% url 'home' %}"; // automatic redirect to homepage for logged in users
+        })();
+      </script>
+  {% endif %}
 </html>
         
