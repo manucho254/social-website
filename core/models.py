@@ -62,6 +62,10 @@ class Comment(models.Model):
     commented_on = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
     liked = models.ManyToManyField(User, blank=True,  related_name="comment_likes")
+    parent = models.ForeignKey('self',  on_delete=models.CASCADE,  blank=True, null=True,  related_name="+")
+    
+    def children(self):
+        return Comment.objects.filter(parent=self).order_by("commented_on").all()
     
     def __str__(self):
         return self.message

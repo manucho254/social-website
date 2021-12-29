@@ -51,7 +51,7 @@ class HomeView(LoginRequiredMixin ,View):
     
 class PostDetailView(LoginRequiredMixin, View):
     def get(self, request, post_slug,  *args,  **kwargs):
-        post =  get_object_or_404(Post, post_slug=post_slug)
+        post =  Post.objects.get(post_slug=post_slug)
         form = CommentModelForm()
         comments = Comment.objects.filter(post=post)
         
@@ -110,14 +110,13 @@ class CreatePostView(LoginRequiredMixin, View):
 class UpdatePostView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['caption','body', 'post_image', ]
-    template_name = 'post_update.html'
+    template_name = 'manuchosocial/post_update.html'
     
     def get_success_url(self):
         slug = self.kwargs['post_slug']
         return reverse_lazy('post-detail',  kwargs={'post_slug': slug})
     
     # overiding the get_object() method to get the desired object from database
-    
     def get_object(self, queryset=None):
         return Post.objects.get(post_slug=self.kwargs.get("post_slug"))
     
@@ -129,6 +128,9 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     template_name = "manuchosocial/post_delete.html"
     success_url = reverse_lazy('home')
+    
+    def get_object(self, queryset=None):
+        return Post.objects.get(post_slug=self.kwargs.get("post_slug"))
     
     def test_func(self):
         post = self.get_object()

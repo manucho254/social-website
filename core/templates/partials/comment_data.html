@@ -4,18 +4,20 @@
     {% for comment in comments %}
       {% if comment %}
         <p class="text-dark">{{ comment.author }}:  {{ comment }} 
-           {% include "partials/comment_like_form.html" %}
             <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span>
-            {% if request.user == comment.author  %}
-            
-            <a class="btn shadow-none " href="{% url 'delete-comment' post.post_slug comment.pk %}">
-                <i class="fas fa-trash-alt text-danger"></i>
-            </a>
-            <a class="btn shadow-none " href="{% url 'edit-comment' post.post_slug comment.pk %}">
-                <i class="fas fa-edit text-info"></i>
-            </a>
-            {% endif %}
         </p>
+        <span class="d-flex">
+          {% include "partials/comment_like_form.html" %}
+            {% if request.user == comment.author  %}
+              <a class="btn shadow-none " href="{% url 'delete-comment' post.post_slug comment.pk %}">
+                  <i class="fas fa-trash-alt text-danger"></i>
+              </a>
+              <a class="btn shadow-none " href="{% url 'edit-comment' post.post_slug comment.pk %}">
+                  <i class="fas fa-edit text-info"></i>
+              </a>
+            {% endif %}
+            <button class="btn shadow-none border-none text-secondary">Reply</button>
+          </span>
         {% endif %}
     {% empty %}
         <div class="px-5"><h4>No comments</h4> be the first to comment..</div>
