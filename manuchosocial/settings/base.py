@@ -7,14 +7,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+w!wucr14o*vq%e9jitfsdlfr4^q*5=ng*p4e0-sa$2u$&nio0'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
-
 # Authentication backend
 
 AUTHENTICATION_BACKENDS = [
@@ -81,21 +73,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'manuchosocial.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'socialweb',
-        'USER': 'postgres',
-        'PASSWORD': 'manucho',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -144,21 +121,10 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
-# ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
-# ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
-# ACCOUNT_UNIQUE_EMAIL = True
 
 LOGIN_URL = "account_login"
 LOGIN_REDIRECT_URL = "home"
 ACCOUNT_EMAIL_REQUIRED = True
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'your_account@gmail.com'
-# EMAIL_HOST_PASSWORD = 'your accounts password'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
