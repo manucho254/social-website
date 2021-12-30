@@ -85,8 +85,8 @@ class Notification(models.Model):
     notification_type = models.IntegerField()
     to_user = models.ForeignKey(User, related_name="notification_to", on_delete=models.CASCADE, null=True)
     from_user = models.ForeignKey(User, related_name="notification_from", on_delete=models.CASCADE, null=True)
-    post = models.ForeignKey('Post', related_name="notification_from", on_delete=models.CASCADE, null=True)
-    comment = models.ForeignKey('Comment', related_name="notification_from", on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey('Post', related_name="+", on_delete=models.CASCADE, blank=True,  null=True)
+    comment = models.ForeignKey('Comment', related_name="+", on_delete=models.CASCADE,  blank=True, null=True)
     date = models.DateTimeField(default=timezone.now)
     user_has_seen = models.BooleanField(default=False)
     
