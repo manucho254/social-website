@@ -4,6 +4,7 @@ from PIL import Image
 from django.core.files import File
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.utils import timezone
 
 class Post(models.Model):
 
@@ -79,3 +80,14 @@ class Comment(models.Model):
     
     class Meta:
         ordering = ["-commented_on"]
+        
+class Notification(models.Model):
+    notification_type = models.IntegerField()
+    to_user = models.ForeignKey(User, related_name="notification_to", on_delete=models.CASCADE, null=True)
+    from_user = models.ForeignKey(User, related_name="notification_from", on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey('Post', related_name="notification_from", on_delete=models.CASCADE, null=True)
+    comment = models.ForeignKey('Comment', related_name="notification_from", on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return "{} ||  {} ".format(self.to_user, self.from_user)
