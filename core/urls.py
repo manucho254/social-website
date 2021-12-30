@@ -12,6 +12,7 @@ urlpatterns = [
     path("post/<slug:post_slug>/comment/count/",  views.CommentCountView.as_view(),  name="comment-count"),
     path("post/<slug:post_slug>/comment/edit/<int:pk>/",   views.UpdateCommentView.as_view(), name="edit-comment"),
     path("post/<slug:post_slug>/comment/delete/<int:pk>/", views.DeleteCommentView.as_view(), name="delete-comment"),
+    path("post/<slug:post_slug>/comment/<int:pk>/reply", views.CommentReplyView.as_view(), name="comment-reply"),
     path("post/<int:pk>/comment/like/add/", views.CommentLikeView.as_view(), name="like-comment"),
     path("post/<slug:post_slug>/likes/add/", views.LikePostView.as_view(), name="like-post"),
     path("search/", views.SearchView.as_view(), name="search")
