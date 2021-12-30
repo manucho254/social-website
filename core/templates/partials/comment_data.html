@@ -4,7 +4,7 @@
   <div class="comments text-secondary font-monospace">
 
     {% for comment in comments %}
-      {% if comment %}
+      {% if comment.is_parent %}
         <p class="text-dark">{{ comment.author }}:  {{ comment }} 
             <span class="text-secondary">{{ comment.commented_on|timesince }} ago</span>
         </p>
@@ -18,16 +18,10 @@
                   <i class="fas fa-edit text-info"></i>
               </a>
             {% endif %}
+            <a class="btn shadow-none border-none text-secondary" onclick='toggleReplyButton("{{ comment.pk }}")'>Reply</a>
           </span>
-          <button id="commentReply" class="btn shadow-none border-none text-secondary" onclick='toggleReplyButton("{{ comment.pk }}")'>Reply</button>
-          <div id="comment-reply-form" class="d-none">
-            <form  method="post" action="/">
-              {% csrf_token %}
-                {{ form|crispy }}
-              <button type="submit" class="btn btn-success mt-4 rounded-pill px-5">reply</button>
-            </form>
-          </div>
-        {% endif %}
+           {% include "partials/comment_reply.html" %}
+    {% endif %}
     {% empty %}
         <div class="px-5"><h4>No comments</h4> be the first to comment..</div>
     {% endfor %}

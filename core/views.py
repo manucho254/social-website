@@ -231,10 +231,22 @@ class CommentLikeView(LoginRequiredMixin, View):
         return redirect("like-comment",  pk=pk)
     
 class CommentReplyView(LoginRequiredMixin, View):
+    def get(self, request, post_slug , pk, *args,  **kwargs):
+        post = Post.objects.get(post_slug=post_slug)
+        comment = Comment.objects.get(pk=pk)
+        reply_form = CommentModelForm()
+        
+        context = {
+            "reply_form": reply_form,
+            "comment": comment,
+            "post": post
+        }
+        return render(request,  "partials/comment_reply.html",  context)
+        
     def post(self,  request, post_slug, pk,  *args,  **kwargs):
         post = Post.objects.get(post_slug=post_slug)
         comment_parent = Comment.objects.get(pk=pk)
-        form = CommentModelForm(request.Post)
+        form = CommentModelForm(request.POST)
         
         if form.is_valid():
             new_comment = form.save(commit=False)

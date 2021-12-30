@@ -1,0 +1,30 @@
+{% load crispy_forms_tags %}
+
+<div class="row justify-content-center mt-2 mb-2 d-none" id="{{ comment.pk }}">
+    <div class="col-md-5 col-sm-12">
+        <form method="post" action="{% url 'comment-reply' post.post_slug comment.pk %}">
+          {% csrf_token %}
+           {{ reply_form|crispy }}
+           <button type="submit" class="btn btn-info rounded-pill px-2">reply</button>
+        </form>
+    </div>
+</div>
+
+{% for child_comment in comment.children %}
+    <div>
+        <p class="text-dark">{{  child_comment.author }}:  {{ comment }} 
+            <span class="text-secondary">{{  child_comment.commented_on|timesince }} ago</span>
+        </p>
+        <span class="d-flex">
+        {% include "partials/comment_like_form.html" %}
+            {% if request.user ==  child_comment.author  %}
+            <a class="btn shadow-none " href="{% url 'delete-comment' post.post_slug  child_comment.pk %}">
+                <i class="fas fa-trash-alt text-danger"></i>
+            </a>
+            <a class="btn shadow-none " href="{% url 'edit-comment' post.post_slug  child_comment.pk %}">
+                <i class="fas fa-edit text-info"></i>
+            </a>
+            {% endif %}
+        </span>
+    </div>
+{% endfor %}
