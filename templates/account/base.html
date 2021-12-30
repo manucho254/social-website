@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 
-{% include "allcss.html" %}
-
 <html>
   <head>
     <title>{% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
+    {% incude 'allcss.html' %}
   </head>
   <body>
     {% block body %}
@@ -39,9 +38,9 @@
     {% endblock %}
     {% block extra_body %}
     {% endblock %}
-  </body>
 
-{% include "allscripts.html" %}
+    {% include "allscripts.html" %}
+  </body>
 
 </html>
 

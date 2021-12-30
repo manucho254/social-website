@@ -1,6 +1,8 @@
-{% load crispy_forms_tags %} {% load i18n %} {% include "allcss.html" %} 
+{% load crispy_forms_tags %} {% load i18n %} 
 
 {% block content %}
+{% include "allcss.html" %} 
+
 <section class="p-3 mt-4 font-monospace">
   <div class="row justify-content-center mt-5">
     <div class="col-lg-5 col-sm-12">
@@ -15,13 +17,13 @@
             method="post"
             action="{% url 'account_signup' %}"
           >
-            {% csrf_token %} {{ form|crispy }} {% if redirect_field_value %}
+            {% csrf_token %} {{ form|crispy }}
             <input
               type="hidden"
               name="{{ redirect_field_name }}"
-              value="{{ redirect_field_value }}"
+              value="{% url 'account_login' %}"
             />
-            {% endif %}
+            {% comment %} {% if redirect_field_value %}{% endif %} {% endcomment %}
             <button class="btn w-25 btn-dark my-3" type="submit">
               {% trans "Sign Up" %} &raquo;
             </button>
@@ -35,5 +37,6 @@
     </div>
   </div>
 </section>
+{% include "allscripts.html" %}
 
-{% endblock %} {% include "allscripts.html" %}
+{% endblock %}
