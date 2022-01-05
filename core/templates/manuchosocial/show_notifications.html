@@ -5,39 +5,39 @@
             <p class="h5 text-dark">{{ notifications.count }}</p>
         </span>
     </button>
-    <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+    <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end p-3">
      {% for notification in notifications %}
         {% if notification.post %}
             {% if notification.notification_type == 1 %}
              <div class="dropdown-item-parent">
-                 <a  class="nav-link" href="#">@{{ notification.from_user }} liked your post</a>
-                 <span class="dropdown-item-close">&times;</span>
+                 <a  class="link-light" href="#">@{{ notification.from_user }} liked your post</a>
+                 <span class="dropdown-item-close bg-dark p-1 rounded-pill">&times;</span>
              </div>
             {% elif notification.notification_type == 2 %}
-             <div class="dropdown-item">
-                <a  class="nav-link" href="#">@{{ notification.from_user }} commented on your post</a>
-                <span class="dropdown-item-close">&times;</span>
+             <div class="dropdown-item-parent">
+                <a  class="link-light" href="#">@{{ notification.from_user }} commented on your post</a>
+                <span class="dropdown-item-close bg-dark p-1 rounded-pill">&times;</span>
             </div>
            {% endif %}
        
         {% elif notification.comment %}
            {% if notification.notification_type == 1 %}
-             <div class="dropdown-item">
-                <a  class="nav-link" href="#">@{{ notification.from_user }} liked your comment</a>
-                <span class="dropdown-item-close">&times;</span>
+             <div class="dropdown-item-parent">
+                <a class="link-light" href="#">@{{ notification.from_user }} liked your comment</a>
+                <span class="dropdown-item-close bg-dark p-1 rounded-pill">&times;</span>
              </div>
            {% elif notification.notification_type == 2 %}
-              <div class="dropdown-item">
-                <a class="nav-link" href="#">@{{ notification.from_user }} commented on your comment</a>
-                <span class="dropdown-item-close">&times;</span>
-             </div>
+              <div class="dropdown-item-parent">
+                <a class="link-light" href="#">@{{ notification.from_user }} commented on your comment</a>
+                <span class="dropdown-item-close bg-dark p-1 rounded-pill">&times;</span>
+              </div>
             {% endif %}
 
         {% else %}
-                <div class="dropdown-item-parent">
-                    <a href="#">@{{ notification.from_user }} started following you</a>
-                    <span class="dropdown-item-close">&times;</span>
-                </div>
+             <div class="dropdown-item-parent">
+                <a class="link-light"href="#">@{{ notification.from_user }} started following you</a>
+                <span class="dropdown-item-close bg-dark p-1 rounded-pill">&times;</span>
+            </div>
         {% endif %}
      {% endfor %}
     </div>
