@@ -18,9 +18,6 @@ class Post(models.Model):
     post_thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     
-    class Meta:
-        ordering = ["-created_on"]
-    
     def __str__(self):
         return "{}  | {}".format(self.author, self.caption) 
     
@@ -55,7 +52,9 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.post_slug = slugify(self.caption)
         super(Post, self).save(*args, **kwargs)
-  
+        
+    class Meta:
+        ordering = ["-created_on"]
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -91,4 +90,7 @@ class Notification(models.Model):
     user_has_seen = models.BooleanField(default=False)
     
     def __str__(self):
-        return "{} ||  {} ".format(self.to_user, self.from_user)
+        return "{} || {} ".format(self.to_user, self.from_user)
+    
+    class Meta:
+        ordering = ["-date"]

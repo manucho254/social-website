@@ -10,6 +10,18 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "*"]
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'server',
+        'USER': 'dbuser',
+        'PASSWORD': 'pass',
+        'HOST': 'somedbserver.com',
+        'PORT': '5432',
+    }
+}
+
+
 #Email backend settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
