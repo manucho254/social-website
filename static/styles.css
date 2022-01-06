@@ -67,6 +67,16 @@ body {
     width: 20px;
 }
 
+.dropdown-close {
+    transition: ease-in 3s;
+    cursor: pointer;
+}
+
+.dropdown-close:hover {
+    transition: ease-in-out 3s;
+    cursor: pointer;
+}
+
 .post-body {
     height: 100px;
     text-align: start;

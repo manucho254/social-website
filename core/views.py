@@ -3,9 +3,10 @@ from accounts.models import Profile
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
-from .models import Post,Comment
+from .models import Post,Comment,Notification
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from .forms import CommentModelForm,PostModelForm
+from django.http import HttpResponse
 from django.views import View
 from django.views.generic import UpdateView,DeleteView
 
@@ -77,6 +78,9 @@ class PostDetailView(LoginRequiredMixin, View):
             new_comment.post = post
             new_comment.save()
             
+        notification = Notification.objects.create(\
+                     notification_type=2,  from_user=request.user, to_user=post.author, post=post)
+        
         context = {
             "post": post,
             "form": form,
@@ -224,12 +228,14 @@ class CommentLikeView(LoginRequiredMixin, View):
         
         if not is_like:
             comment.liked.add(request.user)
+            notification = Notification.objects.create(\
+                     notification_type=1,  from_user=request.user, to_user=comment.author, comment=comment)
             
         if is_like:
             comment.liked.remove(request.user)
         
         return redirect("like-comment",  pk=pk)
-    
+
 class CommentReplyView(LoginRequiredMixin, View):
     def get(self, request, post_slug , pk, *args,  **kwargs):
         post = Post.objects.get(post_slug=post_slug)
@@ -245,18 +251,20 @@ class CommentReplyView(LoginRequiredMixin, View):
         
     def post(self,  request, post_slug, pk,  *args,  **kwargs):
         post = Post.objects.get(post_slug=post_slug)
-        comment_parent = Comment.objects.get(pk=pk)
+        parent_comment = Comment.objects.get(pk=pk)
         form = CommentModelForm(request.POST)
         
         if form.is_valid():
             new_comment = form.save(commit=False)
             new_comment.author = request.user
             new_comment.post = post
-            new_comment.parent = comment_parent
+            new_comment.parent =  parent_comment
             new_comment.save()
         
+        notification = Notification.objects.create(\
+                     notification_type=2,  from_user=request.user, to_user=parent_comment.author, comment=new_comment)
+        
         return redirect("post-detail",  post_slug=post_slug)
-
 #follow and unfollow views
 
 class LikePostView(LoginRequiredMixin,  View):
@@ -280,6 +288,8 @@ class LikePostView(LoginRequiredMixin,  View):
         
         if not is_like:
             post.likes.add(request.user)
+            notification = Notification.objects.create(\
+                     notification_type=1,  from_user=request.user, to_user=post.author, post=post)
             
         if is_like:
             post.likes.remove(request.user)
@@ -301,4 +311,35 @@ class SearchView(View):
         
         return render(request, template_name ,  context)
     
+    
+class PostNotificationView(View):
+    def get(self, request, notification_pk, post_slug ,  *args, **kwargs):
+        notification = Notification.objects.get(pk=notification_pk)
+        post = Post.objects.get(post_slug=post_slug)
+        
+        notification.user_has_seen = True
+        notification.save()
+        
+        return redirect("post-detail", post_slug=post_slug)
+    
+class FollowNotificationView(View):
+    def get(self, request, notification_pk, profile_slug ,  *args, **kwargs):
+        notification = Notification.objects.get(pk=notification_pk)
+        profile = Profile.objects.get(profile_slug=profile_slug)
+        
+        notification.user_has_seen = True
+        notification.save()
+        
+        return redirect("profile", profile_slug=profile_slug)
+    
+class RemoveNotificationView(View):
+    def delete(self, request,  notification_pk, *args,  **kwargs):
+        notification = Notification.objects.get(pk=notification_pk)
+        
+        notification.user_has_seen = True
+        notification.save()
+        
+        return HttpResponse("Success",  content_type="text/plain")
+        
+        
     

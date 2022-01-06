@@ -1,10 +1,11 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect
 from django.urls import reverse_lazy
 from .models import Profile
 from core.models import  Post
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views import View
-from django.views.generic import UpdateView,DeleteView
+from django.views.generic import UpdateView
+from core.models import Notification
 
 class ProfileView(LoginRequiredMixin, View):
     def get(self,  request, profile_slug,*args,  **kwargs):
@@ -86,7 +87,9 @@ class AddFollowerView(LoginRequiredMixin,  View):
     def post(self, request, profile_slug,  *args, **kwargs):
         profile = Profile.objects.get(profile_slug=profile_slug)
         profile.followers.add(request.user)
-        profile.following.add(profile.user)
+        
+        notification = Notification.objects.create(\
+                    notification_type=3,  from_user=request.user, to_user=profile.user)
         
         return redirect("profile",  profile_slug=profile_slug)
        
@@ -107,7 +110,6 @@ class RemoveFollowerView(LoginRequiredMixin,  View):
     def post(self, request, profile_slug,  *args, **kwargs):
         profile = Profile.objects.get(profile_slug=profile_slug)
         profile.followers.remove(request.user)
-        profile.following.remove(profile.user)
         
         return redirect("profile",  profile_slug=profile_slug)
     
