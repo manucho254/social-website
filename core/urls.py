@@ -18,5 +18,8 @@ urlpatterns = [
     path("search/", views.SearchView.as_view(), name="search"),
     path("notification/<int:notification_pk>/post/<slug:post_slug>/", views.PostNotificationView.as_view(),  name="post-notification"),
     path("notification/<int:notification_pk>/profile/<slug:profile_slug>/", views.FollowNotificationView.as_view(),  name="follow-notification"),
-     path("notification/delete/<int:notification_pk>/", views.RemoveNotificationView.as_view(),  name="remove-notification")
+    path("notification/delete/<int:notification_pk>/", views.RemoveNotificationView.as_view(),  name="remove-notification"),
+    path("inbox/",  views.ListThreadsView.as_view(),  name="inbox"),
+    path("inbox/create-thread/",  views.CreateThreadView.as_view(),  name="create-thread"),
+    path("inbox/<int:pk>/",  views.MessegeView.as_view(),  name="thread"),
 ]

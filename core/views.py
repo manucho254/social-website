@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from accounts.models import Profile
 from django.db.models import Q
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
-from .models import Post,Comment,Notification
+from .models import Post,Comment,Notification, ThreadModel, MessegeModel
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
-from .forms import CommentModelForm,PostModelForm
+from .forms import CommentModelForm, PostModelForm, ThreadForm, MessegeForm
 from django.http import HttpResponse
 from django.views import View
 from django.views.generic import UpdateView,DeleteView
@@ -15,6 +16,8 @@ class LandingPage(View):
     def get(self, request,  *args,  **kwargs):
         template_name = "manuchosocial/landing_page.html"
         return render(request, template_name,  {})
+    
+# post views
 
 class HomeView(LoginRequiredMixin ,View):
     def get(self,  request,  *args,  **kwargs):
@@ -139,6 +142,37 @@ class DeletePostView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
+class LikePostView(LoginRequiredMixin,  View):
+    def get(self,  request, post_slug , *args, **kwargs):
+        template_name = "partials/post_like_form.html"
+        post = Post.objects.get(post_slug=post_slug)
+        context = {
+            "post": post
+        }
+        return render(request, template_name, context)
+    
+    def post(self, request, post_slug,  *args, **kwargs):
+        post = Post.objects.get(post_slug=post_slug)
+        
+        is_like = False
+        
+        for like in post.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+        
+        if not is_like:
+            post.likes.add(request.user)
+            notification = Notification.objects.create(\
+                     notification_type=1,  from_user=request.user, to_user=post.author, post=post)
+            
+        if is_like:
+            post.likes.remove(request.user)
+        
+        return redirect("like-post",  post_slug=post_slug)
+    
+# comment views
     
 class CommentView(LoginRequiredMixin, View):
     def get(self,  request,  post_slug ,  *args, **kwargs):
@@ -265,36 +299,6 @@ class CommentReplyView(LoginRequiredMixin, View):
                      notification_type=2,  from_user=request.user, to_user=parent_comment.author, comment=new_comment)
         
         return redirect("post-detail",  post_slug=post_slug)
-#follow and unfollow views
-
-class LikePostView(LoginRequiredMixin,  View):
-    def get(self,  request, post_slug , *args, **kwargs):
-        template_name = "partials/post_like_form.html"
-        post = Post.objects.get(post_slug=post_slug)
-        context = {
-            "post": post
-        }
-        return render(request, template_name, context)
-    
-    def post(self, request, post_slug,  *args, **kwargs):
-        post = Post.objects.get(post_slug=post_slug)
-        
-        is_like = False
-        
-        for like in post.likes.all():
-            if like == request.user:
-                is_like = True
-                break
-        
-        if not is_like:
-            post.likes.add(request.user)
-            notification = Notification.objects.create(\
-                     notification_type=1,  from_user=request.user, to_user=post.author, post=post)
-            
-        if is_like:
-            post.likes.remove(request.user)
-        
-        return redirect("like-post",  post_slug=post_slug)
     
 #search view   
 class SearchView(View):
@@ -311,6 +315,7 @@ class SearchView(View):
         
         return render(request, template_name ,  context)
     
+# Notification Views
     
 class PostNotificationView(View):
     def get(self, request, notification_pk, post_slug ,  *args, **kwargs):
@@ -340,6 +345,63 @@ class RemoveNotificationView(View):
         notification.save()
         
         return HttpResponse("Success",  content_type="text/plain")
+    
+    
+# =====  messenger like functionlity views  ====#
         
+class  ListThreadsView(View):
+    def get(self,  request,  *args,  **kwargs):
+        threads = ThreadModel.objects.filter(Q(user=request.user) | Q(receiver=request.user))
+        context = {
+            "threads": threads
+        }
         
+        return render(request,  "manuchosocial/inbox.html",  context)
+    
+class CreateThreadView(View):
+    def get(self, request,  *args, **kwargs):
+        form =  ThreadForm()
+        
+        context = {
+            "form": form
+        }
+        return render(request,  "manuchosocial/create_thread.html",  context)
+    
+    def post(self,  request, *args,  **kwargs):
+        
+        form =  ThreadForm(request.POST)
+        username = request.POST.get("username")
+        
+        try:
+            reciever = User.objects.get(username=username)
+            if ThreadModel.objects.filter(user=request.user, reciever=reciever).exists():
+                thread = ThreadModel.objects.filter(user=request.user,  reciever=reciever)[0]
+                return redirect("thread", pk=thread.pk)
+            elif ThreadModel.objects.filter(user=reciever, reciever=request.user).exists():
+                thread = ThreadModel.objects.filter(user=reciever,  reciever=request.user)[0]
+                return redirect("thread", pk=thread.pk)
+            if form.is_valid():
+                thread = ThreadModel(user=request.user, reciever=reciever)
+                thread.save()
+                return redirect("thread", pk=thread.pk)
+        except:
+            return redirect("create-thread")
+        
+class MessegeView(View):
+    def get(self, request, pk ,  *args, **kwargs):
+        form =  MessegeForm()
+        thread = ThreadModel.objects.get(pk=pk)
+        messege_list = MessegeModel.objects.filter(thread__pk__contains=pk)
+        
+        context = {
+            "thread":  thread,
+            "form": form,
+            "messege_list": messege_list
+        }
+        return render(request,  "manuchosocial/thread.html",  context)
+    
+class CreateMessegeView(View):
+    def post(self, request, pk ,  *args, **kwargs):
+        thread = ThreadModel.objects.get(pk=pk)
+        return redirect("thread",  pk=pk)
     

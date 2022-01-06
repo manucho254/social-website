@@ -29,3 +29,9 @@ class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["caption", "body", "post_image"]
+        
+class ThreadForm(forms.Form):
+    username = forms.CharField(label ="", max_length=100)
+    
+class MessegeForm(forms.Form):
+    message = forms.CharField(label ="", max_length=1000)

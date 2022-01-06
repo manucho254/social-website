@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="card col-md-12 p-3 shadow-none mt-4">
+            {% if thread.reciever == request.user %}
+              <h5>@ {{ thread.user }}</h5>
+            {% else %}
+               <h5>@ {{ thread.reciever }}</h5>
+            {% endif %}
+        </div>
+   </div>
+   {% if messege_list.all.count ==0 %}
+    <div class="row my-5">
+        <div class="col-md-12">
+          <p class="empty-text">No Messeges</p>
+        </div>
+    </div>
+   {% endif %}
+
+   {% for messege in messege_list %}
+    <div class="row my-5">
+        <div class="col-md-12">
+           {% if messege.sender_user == request.user %}
+                <div class="sent-messege my-3">
+                  <p>{{ messege.body }}</p>
+                </div>
+            {% elif messsege.reciever_user == request.user %}
+                <div class="recieved-messege my-3">
+                    <p>{{ messege.body }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+   {% endfor %}
+
+   <div class="row my-5">
+        <div class="col-md-12">
+            <form method="post" action="{% url 'create-messege' thread.pk %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-secondary">messege</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content%}
+

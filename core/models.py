@@ -14,8 +14,8 @@ class Post(models.Model):
     post_slug = models.SlugField(max_length=200, blank=True, null=True)
     likes = models.ManyToManyField(User, blank=True,  related_name="likes")
     comments = models.ManyToManyField("Comment", blank=True,  related_name="comments")
-    post_image = models.ImageField(upload_to="uploads/", blank=True, null=True)
-    post_thumbnail = models.ImageField(upload_to="uploads/", blank=True, null=True)
+    post_image = models.ImageField(upload_to="uploads/post_images/", blank=True, null=True)
+    post_thumbnail = models.ImageField(upload_to="uploads/post_images/", blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -66,7 +66,7 @@ class Comment(models.Model):
     
     @property
     def children(self):
-        return Comment.objects.filter(parent=self).order_by("commented_on").all()
+        return Comment.objects.filter(parent=self).order_by("-commented_on").all()
     
     @property
     def is_parent(self):
@@ -94,3 +94,20 @@ class Notification(models.Model):
     
     class Meta:
         ordering = ["-date"]
+    
+class ThreadModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    
+class MessegeModel(models.Model):
+    thread = models.ForeignKey('ThreadModel', related_name='+',  on_delete=models.CASCADE, blank=True, null=True)
+    sender_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    reciever_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    body = models.CharField(max_length=1000)
+    messege_image = models.ImageField(upload_to="uploads/message_images/", blank=True)
+    date = models.DateTimeField(default=timezone.now)
+    is_read = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ["-date"]
+        

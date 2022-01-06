@@ -125,6 +125,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
 
 LOGIN_URL = "account_login"
 LOGIN_REDIRECT_URL = "home"
+SIGN_UP_REDIRECT_URL = "account_login"
 ACCOUNT_EMAIL_REQUIRED = True
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
