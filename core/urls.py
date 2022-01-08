@@ -22,4 +22,5 @@ urlpatterns = [
     path("inbox/",  views.ListThreadsView.as_view(),  name="inbox"),
     path("inbox/create-thread/",  views.CreateThreadView.as_view(),  name="create-thread"),
     path("inbox/<int:pk>/",  views.MessegeView.as_view(),  name="thread"),
+    path("inbox/<int:pk>/messege",  views.CreateMessegeView.as_view(),  name="create-messege"),
 ]

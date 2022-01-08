@@ -372,20 +372,18 @@ class CreateThreadView(View):
         form =  ThreadForm(request.POST)
         username = request.POST.get("username")
         
-        try:
-            reciever = User.objects.get(username=username)
-            if ThreadModel.objects.filter(user=request.user, reciever=reciever).exists():
-                thread = ThreadModel.objects.filter(user=request.user,  reciever=reciever)[0]
-                return redirect("thread", pk=thread.pk)
-            elif ThreadModel.objects.filter(user=reciever, reciever=request.user).exists():
-                thread = ThreadModel.objects.filter(user=reciever,  reciever=request.user)[0]
-                return redirect("thread", pk=thread.pk)
-            if form.is_valid():
-                thread = ThreadModel(user=request.user, reciever=reciever)
-                thread.save()
-                return redirect("thread", pk=thread.pk)
-        except:
-            return redirect("create-thread")
+        reciever = User.objects.get(username=username)
+        if ThreadModel.objects.filter(user=request.user, reciever=reciever).exists():
+            thread = ThreadModel.objects.filter(user=request.user,  reciever=reciever)[0]
+            return redirect("thread", pk=thread.pk)
+        elif ThreadModel.objects.filter(user=reciever, reciever=request.user).exists():
+            thread = ThreadModel.objects.filter(user=reciever,  reciever=request.user)[0]
+            return redirect("thread", pk=thread.pk)
+        if form.is_valid():
+            thread = ThreadModel(user=request.user, reciever=reciever)
+            thread.save()
+            return redirect("thread", pk=thread.pk)
+        return redirect("create-thread")
         
 class MessegeView(View):
     def get(self, request, pk ,  *args, **kwargs):
@@ -403,5 +401,17 @@ class MessegeView(View):
 class CreateMessegeView(View):
     def post(self, request, pk ,  *args, **kwargs):
         thread = ThreadModel.objects.get(pk=pk)
+        if thread.reciever == request.user:
+            reciever = thread.user
+        else:
+            reciever = thread.reciever
+        
+        messege = MessegeModel(
+            thread=thread,
+            sender_user=request.user,
+            reciever_user= reciever,
+            body=request.POST.get("messege")
+            )
+        messege.save()
+        
         return redirect("thread",  pk=pk)
-    

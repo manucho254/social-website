@@ -97,7 +97,7 @@ class Notification(models.Model):
     
 class ThreadModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
+    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
     
 class MessegeModel(models.Model):
     thread = models.ForeignKey('ThreadModel', related_name='+',  on_delete=models.CASCADE, blank=True, null=True)
