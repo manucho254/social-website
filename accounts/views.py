@@ -61,7 +61,7 @@ class EditProfileView(LoginRequiredMixin, UserPassesTestMixin ,UpdateView):
     def get_success_url(self):
         slug = self.kwargs["profile_slug"]
         return reverse_lazy('profile', kwargs={"profile_slug": slug})
-    
+
     def get_object(self, queryset=None):
         return Profile.objects.get(profile_slug=self.kwargs.get("profile_slug"))
     
