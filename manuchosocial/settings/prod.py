@@ -1,14 +1,4 @@
-import os
 from .base import *
-import environ
-
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-
-# Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
@@ -22,10 +12,10 @@ ALLOWED_HOSTS = ["localhost", "*"]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('server'),
-        'USER': env('dbuser'),
-        'PASSWORD': env('pass'),
-        'HOST': env('somedbserver.com'),
+        'NAME': env('NAME'),
+        'USER': env('USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
         'PORT': '5432',
     }
 }
