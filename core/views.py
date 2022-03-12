@@ -352,7 +352,7 @@ class RemoveNotificationView(View):
         
 class  ListThreadsView(View):
     def get(self,  request,  *args,  **kwargs):
-        threads = ThreadModel.objects.filter(Q(user=request.user) | Q(receiver=request.user))
+        threads = ThreadModel.objects.filter(Q(user=request.user) | Q(reciever=request.user))
         context = {
             "threads": threads
         }

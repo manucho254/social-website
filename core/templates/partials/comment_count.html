@@ -1,6 +1,6 @@
-<div hx-get="{% url 'comment-count' post.post_slug %}" hx-trigger="every 5s" hx-swap="outerHTML">
+<div hx-get="{% url 'comment-count' post.post_slug %}" hx-trigger="revealed" hx-swap="outerHTML">
     <button class="btn border-none shadow-none">
         <i class="fa h4 fa-comment  text-secondary" aria-hidden="true"></i>
     </button>
-      <span class="h5">{{ num_of_comments }}</span>
+      <span class="h5">{{ comments_num }}</span>
 </div>

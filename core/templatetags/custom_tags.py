@@ -14,7 +14,7 @@ def show_notifications(context):
         "notifications": notifications
     }
 
-    return notification_data 
+    return notification_data
 
 # reply comment functionality 
 @register.inclusion_tag('manuchosocial/comment_reply_form.html', takes_context=True)
