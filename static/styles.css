@@ -61,10 +61,11 @@ body {
 
 .my-card {
     border: none;
+    width: 500px !important;
 }
 
 .dropdown-menu {
-    width: 20px;
+    width: 100px !important;
 }
 
 .dropdown-close {
@@ -168,4 +169,8 @@ body {
     .comment-input {
         width: auto;
     }
+}
+
+.form-control:focus {
+    box-shadow: none;
 }

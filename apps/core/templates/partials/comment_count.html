@@ -1,0 +1,6 @@
+<div hx-get="{% url 'comment-count' post.post_slug %}" hx-swap="outerHTML">
+    <button class="btn border-none shadow-none">
+        <i class="fa h4 fa-comment  text-secondary" aria-hidden="true"></i>
+    </button>
+      <span class="h5">{{ comments_num }}</span>
+</div>

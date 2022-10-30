@@ -35,12 +35,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'core',
-    'accounts',
-    'chat',
-    'crispy_forms',
+    
+    # local
+    'apps.core',
+    'apps.accounts',
+    'apps.chat',
     
     # django allauth
+    'crispy_forms',
     'allauth',
     'allauth.account',
     'allauth.socialaccount'
