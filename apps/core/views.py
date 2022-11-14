@@ -23,7 +23,6 @@ class LandingPage(View):
 class HomeView(LoginRequiredMixin ,View):
     def get(self,  request,  *args,  **kwargs):
         logged_in_user = request.user
-        posts = Post.objects.all()
         posts = Post.objects.filter(author__profile__followers__in=[logged_in_user.id]) 
         paginator = Paginator(posts, 5) # Show 25 contacts per page.
         page_number = request.GET.get('page')
@@ -363,7 +362,6 @@ class  ListThreadsView(View):
 class CreateThreadView(View):
     def get(self, request,  *args, **kwargs):
         form =  ThreadForm()
-        
         context = {
             "form": form
         }
@@ -388,20 +386,20 @@ class CreateThreadView(View):
         return redirect("create-thread")
         
 class MessegeView(View):
-    def get(self, request, pk ,  *args, **kwargs):
+    def get(self, request, pk, *args, **kwargs):
         form =  MessegeForm()
         thread = ThreadModel.objects.get(pk=pk)
-        messege_list = MessegeModel.objects.filter(thread__pk__contains=pk)
+        message_list = MessegeModel.objects.filter(thread__pk__contains=pk)
         
         context = {
             "thread":  thread,
             "form": form,
-            "messege_list": messege_list
+            "message_list": message_list
         }
         return render(request,  "manuchosocial/thread.html",  context)
     
 class CreateMessegeView(View):
-    def post(self, request, pk ,  *args, **kwargs):
+    def post(self, request, pk, *args, **kwargs):
         thread = ThreadModel.objects.get(pk=pk)
         if thread.reciever == request.user:
             reciever = thread.user
@@ -412,8 +410,8 @@ class CreateMessegeView(View):
             thread=thread,
             sender_user=request.user,
             reciever_user= reciever,
-            body=request.POST.get("messege")
-            )
+            body=request.POST.get("message")
+        )
         messege.save()
         
         return redirect("thread",  pk=pk)

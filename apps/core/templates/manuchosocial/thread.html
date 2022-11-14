@@ -21,16 +21,16 @@
     </div>
    {% endif %}
 
-   {% for messege in messege_list %}
+   {% for message in message_list %}
     <div class="row my-5">
         <div class="col-md-12">
-           {% if messege.sender_user == request.user %}
+           {% if message.sender_user == request.user %}
                 <div class="sent-messege my-3">
-                  <p>{{ messege.body }}</p>
+                  <p>{{ message.body }}</p>
                 </div>
-            {% elif messsege.reciever_user == request.user %}
+            {% elif messsage.reciever_user == request.user %}
                 <div class="recieved-messege my-3">
-                    <p>{{ messege.body }}</p>
+                    <p>{{ message.body }}</p>
                 </div>
             {% endif %}
         </div>
